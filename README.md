@@ -66,3 +66,32 @@ npm install --save-dev @types/react-router-dom
 -   authentication
 -   arch
 -   styles settings
+
+## react-router-dom v6
+
+v6에서 변경된점이 좀 있다.
+
+-   component => element
+
+```
+// v6
+<Routes>
+    <Route path="/" element={<Home />} />
+</Routes>
+```
+
+-   useHistory => useNavigation
+
+```
+// v5
+const history = useHistory();
+
+history.push('/home');
+history.replace('/home');
+
+// v6
+const navigate = useNavigate();
+
+navigate('/home');
+navigate('/home', {replace: true});
+```

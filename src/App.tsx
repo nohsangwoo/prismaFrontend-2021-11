@@ -1,18 +1,20 @@
 import React from 'react';
 import { HashRouter as Router, Routes, Route } from 'react-router-dom';
+import Banana from './pages/Banana';
 import Home from './pages/Home';
 
 function App() {
     return (
-        <div>
-            <Router>
+        <Router>
+            <>
                 <Routes>
-                    <Route path="/">
-                        <Home />
-                    </Route>
+                    <Route path="/" element={<Home />} />
                 </Routes>
-            </Router>
-        </div>
+                <Routes>
+                    <Route path="/banana" element={<Banana />} />
+                </Routes>
+            </>
+        </Router>
     );
 }
 
