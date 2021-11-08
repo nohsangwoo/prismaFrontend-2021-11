@@ -1,46 +1,68 @@
-# Getting Started with Create React App
+## setting up frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+npx create-react-app app-name --template typescript
 
-## Available Scripts
+then
 
-In the project directory, you can run:
+npm install --save typescript @types/node @types/react @types/react-dom @types/jest
 
-### `yarn start`
+## first connection - git
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+npm install --save-dev @types/react-router-dom
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## apply eslint
 
-### `yarn test`
+-   ref: https://eslint.org/docs/user-guide/getting-started
+<!-- -   npm install eslint --save-dev -->
+-   npx eslint --init
+-   erlintrc와 prettierrc설정을 잘 해준다
+-   ref1: https://velog.io/@recordboy/ESLint-Prettier-%EC%A0%81%EC%9A%A9%ED%95%98%EA%B8%B0
+-   ref2: https://prettier.io/docs/en/integrating-with-linters.html
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+-   npm install eslint-config-prettier eslint-plugin-prettier -D
+-   npm install --save-dev prettier
 
-### `yarn build`
+-   ref3: https://github.com/yannickcr/eslint-plugin-react#configuration
+-   $ npm install eslint-plugin-react --save-dev //설치 및 적용
+-   eslint는 익스텐션에서만 설치하는걸로.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## add airBnB condition for eslint
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+-   air bnb 규칙 적용해보기
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+-   npm install eslint-plugin-airbnb@latest --save-dev
+-   규칙이 넘 빡시니깐 적용 제외
 
-### `yarn eject`
+## install basic modules ...things...
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+-   styled conponents
+    https://styled-components.com/
+-   react hook form
+    https://react-hook-form.com/
+-   react router dom
+    https://v5.reactrouter.com/web/guides/quick-start
+-   apollo client
+    https://www.apollographql.com/docs/react/get-started/
+-   react helmet async
+    https://www.npmjs.com/package/react-helmet-async
+-   react font awesome
+    https://fontawesome.com/v5.15/how-to-use/on-the-web/using-with/react
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+-   total install things(copy and paste)
+    npm install --save styled-components
+    npm install react-hook-form
+    npm i react-router-dom
+    npm install @apollo/client graphql
+    npm i react-helmet-async
+    npm i --save @fortawesome/fontawesome-svg-core
+    npm install --save @fortawesome/free-solid-svg-icons
+    npm install --save @fortawesome/react-fontawesome
+    npm install --save @fortawesome/free-brands-svg-icons
+    npm install --save @fortawesome/free-regular-svg-icons
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## setting up
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+-   router
+-   authentication
+-   arch
+-   styles settings
