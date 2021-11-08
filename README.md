@@ -131,3 +131,5 @@ npm i --save-dev @types/aos
 ## apply redux and bug fix
 
 ## Router setup part
+
+-   404 page setting
