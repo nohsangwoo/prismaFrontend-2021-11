@@ -95,3 +95,31 @@ const navigate = useNavigate();
 navigate('/home');
 navigate('/home', {replace: true});
 ```
+
+## redux
+
+-   ref: https://redux-toolkit.js.org/introduction/getting-started
+    npm install @reduxjs/toolkit react-redux redux
+
+    npm install redux-logger redux-persist redux-saga
+
+## aos
+
+npm i aos
+npm i --save-dev @types/aos
+
+## uuid
+
+-   ref: https://www.npmjs.com/package/uuid
+    npm i uuid
+    npm i --save-dev @types/uuid
+
+## material ui
+
+-   ref: https://mui.com/
+-   npm install @mui/material
+-   npm install @material-ui/icons material-ui/core
+
+## socket.io-client
+
+-   npm install socket.io-client
