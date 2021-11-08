@@ -127,3 +127,5 @@ npm i --save-dev @types/aos
 ## lodash
 
 -   ref: https://lodash.com/
+
+## apply redux and bug fix
