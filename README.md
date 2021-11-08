@@ -123,3 +123,7 @@ npm i --save-dev @types/aos
 ## socket.io-client
 
 -   npm install socket.io-client
+
+## lodash
+
+-   ref: https://lodash.com/
