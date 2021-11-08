@@ -129,3 +129,5 @@ npm i --save-dev @types/aos
 -   ref: https://lodash.com/
 
 ## apply redux and bug fix
+
+## Router setup part
