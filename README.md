@@ -154,3 +154,5 @@ npm i --save-dev @types/aos
 -   setting tsconfig for apollo
 
 ## Login ui css
+
+## setting basic login form
