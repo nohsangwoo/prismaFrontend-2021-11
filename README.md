@@ -147,3 +147,8 @@ npm i --save-dev @types/aos
 ## apply globalStyles with styled components
 
 -   css reset
+
+## apollographql/apollo-tooling
+
+-   ref: https://github.com/apollographql/apollo-tooling
+-   setting tsconfig for apollo
