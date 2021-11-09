@@ -133,3 +133,7 @@ npm i --save-dev @types/aos
 ## Router setup part
 
 -   404 page setting
+
+## reactive variable
+
+-   learn usage
