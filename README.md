@@ -140,8 +140,10 @@ npm i --save-dev @types/aos
 
 ## test styled components
 
-## apply theme provider with styled components, css reset
+## apply theme provider with styled components
 
 ## apply darkmode
 
 ## apply globalStyles with styled components
+
+-   css reset
