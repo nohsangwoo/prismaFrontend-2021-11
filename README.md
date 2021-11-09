@@ -139,3 +139,7 @@ npm i --save-dev @types/aos
 -   learn usage
 
 ## test styled components
+
+## apply theme provider with styled components, css reset
+
+## apply darkmode

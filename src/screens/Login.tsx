@@ -3,7 +3,8 @@ import { useDispatch } from 'react-redux';
 import userSlice from 'store/reducers/userSlice';
 import { useReactiveVar } from '@apollo/client';
 import { isLoggedInVar } from 'apollo/apollo';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
+import toggleSlice from 'store/reducers/toggleSlice';
 
 const Title = styled.h1`
     color: bisque;
@@ -12,15 +13,7 @@ const Title = styled.h1`
 `;
 
 const PotatoBTN = styled.button<{ CheckProps?: String }>`
-    color: red;
-    ${props =>
-        props.CheckProps
-            ? css`
-                  color: red;
-              `
-            : css`
-                  color: blue;
-              `}
+    color: ${props => props.theme.fontColor};
 `;
 
 const Container = styled.div`
@@ -51,6 +44,21 @@ const Login = (): JSX.Element => {
 
             <div>{`current potato state: ${potato}`}</div>
             <PotatoBTN onClick={() => togglePotato()}>toggle potato</PotatoBTN>
+
+            <button
+                onClick={() =>
+                    dispatch(toggleSlice.actions.setEnableDarkMode())
+                }
+            >
+                dark mode on
+            </button>
+            <button
+                onClick={() =>
+                    dispatch(toggleSlice.actions.setDisableDarkMode())
+                }
+            >
+                dark mode off
+            </button>
         </Container>
     );
 };

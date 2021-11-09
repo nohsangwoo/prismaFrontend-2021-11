@@ -1,2 +1,2 @@
-export const TOKEN: String = 'TOKEN';
-export const DARK_MODE: String = 'DARK_MODE';
+export const TOKEN: string = 'TOKEN';
+export const DARK_MODE: string = 'DARK_MODE';
