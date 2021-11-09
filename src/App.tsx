@@ -10,6 +10,7 @@ import { ThemeProvider } from 'styled-components';
 import { darkTheme, lightTheme } from 'styles/theme';
 import { GlobalStyles } from 'styles/globalStyles';
 import SignUp from 'screens/SignUp';
+import routes from 'routes';
 
 function App(): JSX.Element {
     const isLoggedIn = useSelector(
@@ -24,11 +25,11 @@ function App(): JSX.Element {
                 <>
                     <Routes>
                         <Route
-                            path="/"
+                            path={routes.home}
                             element={isLoggedIn ? <Home /> : <Login />}
                         />
                         {!isLoggedIn ? (
-                            <Route path="/sign-up" element={<SignUp />} />
+                            <Route path={routes.signUp} element={<SignUp />} />
                         ) : null}
                         <Route path="*" element={<NotFound />}></Route>
                     </Routes>
