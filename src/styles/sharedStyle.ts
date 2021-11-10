@@ -5,3 +5,5 @@ export const BaseBox = styled.div`
     border: 1px solid ${props => props.theme.borderColor};
     width: 100%;
 `;
+
+export const FatLink = styled.div``;

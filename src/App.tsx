@@ -10,7 +10,7 @@ import { ThemeProvider } from 'styled-components';
 import { darkTheme, lightTheme } from 'styles/theme';
 import { GlobalStyles } from 'styles/globalStyles';
 import SignUp from 'screens/SignUp';
-import routes from 'routes';
+import routes from 'Router/routePath';
 
 function App(): JSX.Element {
     const isLoggedIn = useSelector(

@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { BaseBox } from '../shared';
+import { BaseBox } from '../../styles/sharedStyle';
 
 const SBttomBox = styled(BaseBox)`
     padding: 20px 0px;

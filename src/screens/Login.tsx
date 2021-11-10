@@ -10,7 +10,7 @@ import BottomBox from '../components/auth/BottomBox';
 import Button from '../components/auth/Button';
 import Input from '../components/auth/Input';
 import Separator from '../components/auth/Separator';
-import routes from '../routes';
+import routes from '../Router/routePath';
 
 const FacebookLogin = styled.div`
     color: #385285;
