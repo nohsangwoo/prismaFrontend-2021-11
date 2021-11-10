@@ -162,3 +162,5 @@ npm i --save-dev @types/aos
 ## login css part
 
 ## sign up ui
+
+## when use normal form usage before use hookform
