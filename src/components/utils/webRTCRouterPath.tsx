@@ -1,4 +1,4 @@
-export enum RouterPath {
+export enum webRTCRouterPath {
     Main = '/main',
     Chat = '/chat',
     Video = '/video',

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
 import devicesSlice from '../../../store/reducers/devicesSlice';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { RouterPath } from '../routerPath';
+import { webRTCRouterPath } from '../webRTCRouterPath';
 import { IconButton, Tooltip } from '@material-ui/core';
 import Fullscreen from '@material-ui/icons/Fullscreen';
 
@@ -118,10 +118,10 @@ const MyStreamVideoViewer = (props: Props): JSX.Element => {
             />
             {/* <CircularProgressStyled disableShrink />
       연결중 입니다. */}
-            {location.pathname === RouterPath.Chat && (
+            {location.pathname === webRTCRouterPath.Chat && (
                 <Tooltip title="전체화면">
                     <IconButtonWrapper
-                        onClick={() => navigate(RouterPath.Video)}
+                        onClick={() => navigate(webRTCRouterPath.Video)}
                     >
                         <FullscreenButton />
                     </IconButtonWrapper>
