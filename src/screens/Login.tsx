@@ -27,6 +27,8 @@ function Login() {
     const onUsernameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         return setUsername(event.target.value);
     };
+
+    console.log(typeof test);
     return (
         <AuthLayout>
             <PageTitle title="Login" />

@@ -9,6 +9,7 @@ import FormBox from 'components/auth/FormBox';
 import Input from 'components/auth/Input';
 import { FatLink } from 'styles/sharedStyle';
 import routes from 'Router/routePath';
+import PageTitle from 'components/PageTitle';
 
 const HeaderContainer = styled.div`
     display: flex;
@@ -25,6 +26,7 @@ const SubTitle = styled(FatLink)`
 const SignUp = () => {
     return (
         <AuthLayout>
+            <PageTitle title="Sign up" />
             <FormBox>
                 <HeaderContainer>
                     <FontAwesomeIcon icon={faInstagram} size="3x" />
