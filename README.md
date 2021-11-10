@@ -160,3 +160,5 @@ npm i --save-dev @types/aos
 ## share components
 
 ## login css part
+
+## sign up ui
