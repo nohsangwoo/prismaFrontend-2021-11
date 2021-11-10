@@ -12,6 +12,7 @@ import Button from '../components/auth/Button';
 import Input from '../components/auth/Input';
 import Separator from '../components/auth/Separator';
 import routes from '../Router/routePath';
+import PageTitle from 'components/PageTitle';
 
 const FacebookLogin = styled.div`
     color: #385285;
@@ -28,6 +29,7 @@ function Login() {
     };
     return (
         <AuthLayout>
+            <PageTitle title="Login" />
             <FormBox>
                 <div>
                     <FontAwesomeIcon icon={faInstagram} size="3x" />
