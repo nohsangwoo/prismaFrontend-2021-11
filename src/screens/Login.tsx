@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
     faFacebookSquare,
     faInstagram
@@ -23,12 +23,6 @@ const FacebookLogin = styled.div`
 `;
 
 function Login() {
-    const [username, setUsername] = useState('');
-    const onUsernameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        return setUsername(event.target.value);
-    };
-
-    console.log(typeof test);
     return (
         <AuthLayout>
             <PageTitle title="Login" />
@@ -37,12 +31,7 @@ function Login() {
                     <FontAwesomeIcon icon={faInstagram} size="3x" />
                 </div>
                 <form>
-                    <Input
-                        value={username}
-                        onChange={onUsernameChange}
-                        type="text"
-                        placeholder="Username"
-                    />
+                    <Input type="text" placeholder="Username" />
                     <Input type="password" placeholder="Password" />
                     <Button type="submit" value="Log in" />
                 </form>
