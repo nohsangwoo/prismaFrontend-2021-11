@@ -168,3 +168,10 @@ npm i --save-dev @types/aos
 ## separate Routes parts
 
 ## apply react helmet async
+
+## react hook form usage
+
+## yup - validate(with react hook form)
+
+-   ref: https://www.npmjs.com/package/yup
+-   npm install @hookform/resolvers yup
