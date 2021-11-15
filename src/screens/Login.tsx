@@ -33,10 +33,12 @@ type FormValues = {
 const schema = yup
     .object({
         // 인자로 string형식의 데이터를 추가하면 에러 메시지를 수정할수 있다.
-        username: yup.string().email().required(),
-        // potato라는 문자를 포함해야하는 경우(응용 가능)
-        // password: yup.string().min(5).required().oneOf(['potato'])
-        password: yup.string().min(5).required().oneOf(['potato'])
+        username: yup
+            .string()
+            .email()
+            .min(5, 'Username should be longer than 5 chars.')
+            .required(),
+        password: yup.string().required().oneOf(['potato'])
     })
     .required();
 
