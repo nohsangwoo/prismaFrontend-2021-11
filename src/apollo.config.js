@@ -1,10 +1,10 @@
 module.exports = {
     client: {
-        includes: ['./src/**/*.ts'],
+        includes: ['./**/*.ts'],
         tagName: 'gql',
         service: {
-            name: 'prisma-backend',
-            url: 'http://localhost:4000/graphql'
+            name: 'prisma-client-js',
+            url: 'http://localhost:4000/specialUrl'
         }
     }
 };

@@ -7,7 +7,7 @@ import { darkTheme, lightTheme } from 'styles/theme';
 import { GlobalStyles } from 'styles/globalStyles';
 import { HelmetProvider } from 'react-helmet-async';
 import Router from 'Router';
-import { client } from 'apollo/apollo';
+import { client } from 'apollo';
 
 function App(): JSX.Element {
     const darkMode = useSelector((state: RootState) => state.toggles.darkMode);

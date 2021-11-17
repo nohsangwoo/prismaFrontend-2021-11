@@ -183,3 +183,7 @@ npm i --save-dev @types/aos
     https://www.apollographql.com/docs/react/caching/cache-configuration/
 
 ## usage of login mutation
+
+## 백엔드 연결문제
+
+-   백엔드에 쿼리는 날라가는데 응답이 이상함 파악좀 해야지

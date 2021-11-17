@@ -2,9 +2,10 @@ import {
     ApolloClient,
     InMemoryCache,
     createHttpLink,
-    makeVar
+    makeVar,
+    NormalizedCacheObject
 } from '@apollo/client';
-import { TOKEN, DARK_MODE } from './constance';
+import { TOKEN, DARK_MODE } from './apollo/constance';
 import { setContext } from '@apollo/client/link/context';
 
 export const isLoggedInVar = makeVar(false);
@@ -18,7 +19,7 @@ const httpLink = createHttpLink({
     uri:
         process.env.NODE_ENV === 'production'
             ? process.env.REACT_APP_PROD_URI
-            : 'http://localhost:4000/graphql'
+            : 'http://localhost:4000/specialUrl'
 });
 
 // setContext함수는 클라이언트의 모든 Request에 몇가지 항목을 추가하는 일을 한다
@@ -38,12 +39,17 @@ const authLink = setContext((_, { headers }) => {
 });
 
 const cache = new InMemoryCache();
+//     {
+//     typePolicies: {
+//         User: {
+//             // 정확히 어떤 필드를 고유식별자로 설정할건지 설정함
+//             keyFields: obj => `User:${obj.username}`
+//         }
+//     }
+// }
 
-export const client = new ApolloClient({
+export const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
     link: authLink.concat(httpLink),
-    cache,
-    // uri: 'http://localhost:4000/graphql',
-    name: 'prisma-web-client',
-    version: '1.0',
-    queryDeduplication: true
+    // uri: 'http://localhost:4000/specialUrl',
+    cache
 });

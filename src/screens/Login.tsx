@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
     faFacebookSquare,
     faInstagram
@@ -30,7 +30,7 @@ const FacebookLogin = styled.div`
 type FormValues = {
     username: string;
     password: string;
-    result: string;
+    // result: string;
 };
 
 const schema = yup
@@ -41,7 +41,7 @@ const schema = yup
             .email()
             .min(5, 'Username should be longer than 5 chars.')
             .required(),
-        password: yup.string().required().oneOf(['potato'])
+        password: yup.string().required()
     })
     .required();
 
@@ -55,29 +55,53 @@ const LOGIN_MUTATION = gql`
     }
 `;
 
+// export const LOGIN_USER = gql`
+//     mutation Authenticate($email: String!, $password: String!) {
+//         authenticate(email: $email, password: $password) {
+//             sessionId
+//             tokens {
+//                 accessToken
+//                 refreshToken
+//             }
+//             user {
+//                 id
+//             }
+//         }
+//     }
+// `;
+
 function Login() {
-    const { register, handleSubmit, watch, formState, getValues, setError } =
-        useForm<FormValues>({
-            resolver: yupResolver(schema),
-            mode: 'onChange'
-        });
+    const [resultError, setResultError] = useState<string>('');
+    const {
+        register,
+        handleSubmit,
+        watch,
+        formState,
+        getValues
+        //  setError
+    } = useForm<FormValues>({
+        resolver: yupResolver(schema),
+        mode: 'onChange'
+    });
 
     const onCompleted = (data: any) => {
         const {
             login: { ok, error, token }
         } = data;
         if (!ok) {
-            setError('result', {
-                message: error
-            });
+            setResultError(error);
+            // setError('result', {
+            //     message: error
+            // });
         }
     };
-    const [login, { loading }] = useMutation(LOGIN_MUTATION, {
-        onCompleted
-    });
+
+    const [login, { data, loading, error }] = useMutation(LOGIN_MUTATION);
+    // const [mutateFunction, { data, loading, error }] = useMutation(INCREMENT_COUNTER);
+    console.log('data', data);
 
     const onSubmitValid: SubmitHandler<FormValues> = data => {
-        //console.log(data);
+        console.log(data);
         if (loading) {
             return;
         }
@@ -119,20 +143,18 @@ function Login() {
                     <FormError
                         message={formState.errors.password?.message as string}
                     />
-                    <Input
+                    {/* <Input
                         {...register('result')}
                         type="text"
                         placeholder="result"
-                    />
+                    /> */}
                     <Button
                         type="submit"
                         value={loading ? 'Loading...' : 'Log in'}
                         disabled={!formState.isValid || loading}
                     />
 
-                    <FormError
-                        message={formState.errors?.result?.message as string}
-                    />
+                    <FormError message={resultError} />
                 </form>
                 <Separator />
                 <FacebookLogin>
