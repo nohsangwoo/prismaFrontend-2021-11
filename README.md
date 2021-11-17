@@ -169,9 +169,17 @@ npm i --save-dev @types/aos
 
 ## apply react helmet async
 
--   ref: https://www.apollographql.com/docs/react/api/core/ApolloClient/
+## react hook form usage
+
+## yup - validate(with react hook form)
+
+-   ref: https://www.npmjs.com/package/yup
+-   npm install @hookform/resolvers yup
 
 ## apply apollo client
 
+-   ref: https://www.apollographql.com/docs/react/api/core/ApolloClient/
 -   cache 관련 내용
     https://www.apollographql.com/docs/react/caching/cache-configuration/
+
+## usage of login mutation

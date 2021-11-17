@@ -13,8 +13,11 @@ import Input from '../components/auth/Input';
 import Separator from '../components/auth/Separator';
 import routes from '../Router/routePath';
 import PageTitle from 'components/PageTitle';
-import { useForm } from 'react-hook-form';
+import { useForm, SubmitHandler } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
 import { gql, useMutation } from '@apollo/client';
+import FormError from 'components/auth/FormError';
 
 const FacebookLogin = styled.div`
     color: #385285;
@@ -24,18 +27,40 @@ const FacebookLogin = styled.div`
     }
 `;
 
+type FormValues = {
+    username: string;
+    password: string;
+    result: string;
+};
+
+const schema = yup
+    .object({
+        // 인자로 string형식의 데이터를 추가하면 에러 메시지를 수정할수 있다.
+        username: yup
+            .string()
+            .email()
+            .min(5, 'Username should be longer than 5 chars.')
+            .required(),
+        password: yup.string().required().oneOf(['potato'])
+    })
+    .required();
+
 const LOGIN_MUTATION = gql`
     mutation login($username: String!, $password: String!) {
-        ok
-        token
-        error
+        login(username: $username, password: $password) {
+            ok
+            token
+            error
+        }
     }
 `;
 
 function Login() {
-    const { register, handleSubmit, getValues, setError } = useForm({
-        mode: 'onChange'
-    });
+    const { register, handleSubmit, watch, formState, getValues, setError } =
+        useForm<FormValues>({
+            resolver: yupResolver(schema),
+            mode: 'onChange'
+        });
 
     const onCompleted = (data: any) => {
         const {
@@ -51,7 +76,7 @@ function Login() {
         onCompleted
     });
 
-    const onSubmitValid = (data: any) => {
+    const onSubmitValid: SubmitHandler<FormValues> = data => {
         //console.log(data);
         if (loading) {
             return;
@@ -62,7 +87,11 @@ function Login() {
         });
     };
 
-    const onSubmit = handleSubmit(onSubmitValid);
+    // const onSubmit: SubmitHandler<FormValues> = data => {
+    //     console.log('haha: ', data);
+    // };
+
+    console.log(watch()); // watch input value by passing the name of it
 
     return (
         <AuthLayout>
@@ -71,18 +100,39 @@ function Login() {
                 <div>
                     <FontAwesomeIcon icon={faInstagram} size="3x" />
                 </div>
-                <form onSubmit={onSubmit}>
+                <form onSubmit={handleSubmit(onSubmitValid)}>
                     <Input
+                        {...register('username')}
                         type="text"
                         placeholder="Username"
-                        {...register('username')}
                     />
+
+                    <FormError
+                        message={formState.errors.username?.message as string}
+                    />
+
                     <Input
+                        {...register('password')}
                         type="password"
                         placeholder="Password"
-                        {...register('password')}
                     />
-                    <Button type="submit" value="Log in" />
+                    <FormError
+                        message={formState.errors.password?.message as string}
+                    />
+                    <Input
+                        {...register('result')}
+                        type="text"
+                        placeholder="result"
+                    />
+                    <Button
+                        type="submit"
+                        value={loading ? 'Loading...' : 'Log in'}
+                        disabled={!formState.isValid || loading}
+                    />
+
+                    <FormError
+                        message={formState.errors?.result?.message as string}
+                    />
                 </form>
                 <Separator />
                 <FacebookLogin>
