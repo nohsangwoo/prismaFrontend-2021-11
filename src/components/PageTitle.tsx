@@ -5,7 +5,11 @@ interface Props {
     title: string;
 }
 const PageTitle = ({ title }: Props) => {
-    return <Helmet>{title} | Instaclone</Helmet>;
+    return (
+        <Helmet>
+            <title>{title} | Instaclone</title>
+        </Helmet>
+    );
 };
 
 export default PageTitle;

@@ -168,3 +168,10 @@ npm i --save-dev @types/aos
 ## separate Routes parts
 
 ## apply react helmet async
+
+-   ref: https://www.apollographql.com/docs/react/api/core/ApolloClient/
+
+## apply apollo client
+
+-   cache 관련 내용
+    https://www.apollographql.com/docs/react/caching/cache-configuration/
