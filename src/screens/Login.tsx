@@ -14,6 +14,7 @@ import Separator from '../components/auth/Separator';
 import routes from '../Router/routePath';
 import PageTitle from 'components/PageTitle';
 import { useForm } from 'react-hook-form';
+import { gql, useMutation } from '@apollo/client';
 
 const FacebookLogin = styled.div`
     color: #385285;
@@ -23,10 +24,45 @@ const FacebookLogin = styled.div`
     }
 `;
 
-function Login() {
-    const { register, handleSubmit } = useForm();
+const LOGIN_MUTATION = gql`
+    mutation login($username: String!, $password: String!) {
+        ok
+        token
+        error
+    }
+`;
 
-    const onSubmit = handleSubmit(data => console.log(data));
+function Login() {
+    const { register, handleSubmit, getValues, setError } = useForm({
+        mode: 'onChange'
+    });
+
+    const onCompleted = (data: any) => {
+        const {
+            login: { ok, error, token }
+        } = data;
+        if (!ok) {
+            setError('result', {
+                message: error
+            });
+        }
+    };
+    const [login, { loading }] = useMutation(LOGIN_MUTATION, {
+        onCompleted
+    });
+
+    const onSubmitValid = (data: any) => {
+        //console.log(data);
+        if (loading) {
+            return;
+        }
+        const { username, password } = getValues();
+        login({
+            variables: { username, password }
+        });
+    };
+
+    const onSubmit = handleSubmit(onSubmitValid);
 
     return (
         <AuthLayout>
