@@ -5,8 +5,9 @@ import {
     makeVar,
     NormalizedCacheObject
 } from '@apollo/client';
-import { TOKEN, DARK_MODE } from './apollo/constance';
+import { TOKEN, DARK_MODE } from './constance';
 import { setContext } from '@apollo/client/link/context';
+import { splitLink } from './splitLink';
 
 export const isLoggedInVar = makeVar(false);
 
@@ -19,7 +20,7 @@ const httpLink = createHttpLink({
     uri:
         process.env.NODE_ENV === 'production'
             ? process.env.REACT_APP_PROD_URI
-            : 'http://localhost:4000/specialUrl'
+            : 'http://localhost:4000/graphql'
 });
 
 // setContext함수는 클라이언트의 모든 Request에 몇가지 항목을 추가하는 일을 한다
@@ -38,7 +39,18 @@ const authLink = setContext((_, { headers }) => {
     };
 });
 
-const cache = new InMemoryCache();
+const cache = new InMemoryCache({
+    typePolicies: {
+        Query: {
+            fields: {
+                feed: {
+                    keyArgs: false
+                }
+            }
+        }
+    }
+});
+
 //     {
 //     typePolicies: {
 //         User: {
@@ -49,6 +61,7 @@ const cache = new InMemoryCache();
 // }
 
 export const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
+    // link: splitLink,
     link: authLink.concat(httpLink),
     // uri: 'http://localhost:4000/specialUrl',
     cache
