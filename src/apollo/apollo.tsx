@@ -61,8 +61,8 @@ const cache = new InMemoryCache({
 // }
 
 export const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
-    // link: splitLink,
-    link: authLink.concat(httpLink),
+    link: splitLink,
+    // link: authLink.concat(httpLink),
     // uri: 'http://localhost:4000/specialUrl',
     cache
 });
