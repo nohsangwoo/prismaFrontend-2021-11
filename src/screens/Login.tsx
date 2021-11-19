@@ -38,7 +38,7 @@ const schema = yup
         // 인자로 string형식의 데이터를 추가하면 에러 메시지를 수정할수 있다.
         username: yup
             .string()
-            .email()
+            // .email()
             .min(5, 'Username should be longer than 5 chars.')
             .required(),
         password: yup.string().required()
@@ -107,7 +107,7 @@ function Login() {
         }
         const { username, password } = getValues();
         login({
-            variables: { username, password }
+            variables: { userName: username, password }
         });
     };
 
