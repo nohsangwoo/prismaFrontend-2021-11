@@ -30,6 +30,7 @@ const FacebookLogin = styled.div`
 type FormValues = {
     username: string;
     password: string;
+    result: string;
     // result: string;
 };
 
@@ -55,48 +56,27 @@ const LOGIN_MUTATION = gql`
     }
 `;
 
-// export const LOGIN_USER = gql`
-//     mutation Authenticate($email: String!, $password: String!) {
-//         authenticate(email: $email, password: $password) {
-//             sessionId
-//             tokens {
-//                 accessToken
-//                 refreshToken
-//             }
-//             user {
-//                 id
-//             }
-//         }
-//     }
-// `;
-
 function Login() {
-    const [resultError, setResultError] = useState<string>('');
-    const {
-        register,
-        handleSubmit,
-        watch,
-        formState,
-        getValues
-        //  setError
-    } = useForm<FormValues>({
-        resolver: yupResolver(schema),
-        mode: 'onChange'
-    });
+    const { register, handleSubmit, watch, formState, getValues, setError } =
+        useForm<FormValues>({
+            resolver: yupResolver(schema),
+            mode: 'onChange'
+        });
 
     const onCompleted = (data: any) => {
         const {
             login: { ok, error, token }
         } = data;
         if (!ok) {
-            setResultError(error);
-            // setError('result', {
-            //     message: error
-            // });
+            setError('result', {
+                message: error
+            });
         }
     };
 
-    const [login, { data, loading, error }] = useMutation(LOGIN_MUTATION);
+    const [login, { data, loading, error }] = useMutation(LOGIN_MUTATION, {
+        onCompleted
+    });
     // const [mutateFunction, { data, loading, error }] = useMutation(INCREMENT_COUNTER);
     console.log('data', data);
 
@@ -110,10 +90,6 @@ function Login() {
             variables: { userName: username, password }
         });
     };
-
-    // const onSubmit: SubmitHandler<FormValues> = data => {
-    //     console.log('haha: ', data);
-    // };
 
     console.log(watch()); // watch input value by passing the name of it
 
@@ -143,18 +119,16 @@ function Login() {
                     <FormError
                         message={formState.errors.password?.message as string}
                     />
-                    {/* <Input
-                        {...register('result')}
-                        type="text"
-                        placeholder="result"
-                    /> */}
+
                     <Button
                         type="submit"
                         value={loading ? 'Loading...' : 'Log in'}
                         disabled={!formState.isValid || loading}
                     />
 
-                    <FormError message={resultError} />
+                    <FormError
+                        message={formState?.errors?.result?.message as string}
+                    />
                 </form>
                 <Separator />
                 <FacebookLogin>

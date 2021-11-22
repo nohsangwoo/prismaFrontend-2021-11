@@ -3,14 +3,14 @@ import { getMainDefinition } from '@apollo/client/utilities';
 import { WebSocketLink } from '@apollo/client/link/ws';
 
 const httpLink = new HttpLink({
-  uri: 'http://localhost:4000/graphql'
+    uri: 'http://localhost:4000/graphql'
 });
 
 const wsLink = new WebSocketLink({
-  uri: 'ws://localhost:4000/subscriptions',
-  options: {
-    reconnect: true
-  }
+    uri: 'ws://localhost:4000/subscriptions',
+    options: {
+        reconnect: true
+    }
 });
 
 // The split function takes three parameters:
@@ -19,13 +19,13 @@ const wsLink = new WebSocketLink({
 // * The Link to use for an operation if the function returns a "truthy" value
 // * The Link to use for an operation if the function returns a "falsy" value
 export const splitLink = split(
-  ({ query }) => {
-    const definition = getMainDefinition(query);
-    return (
-      definition.kind === 'OperationDefinition' &&
-      definition.operation === 'subscription'
-    );
-  },
-  wsLink,
-  httpLink,
+    ({ query }) => {
+        const definition = getMainDefinition(query);
+        return (
+            definition.kind === 'OperationDefinition' &&
+            definition.operation === 'subscription'
+        );
+    },
+    wsLink,
+    httpLink
 );
