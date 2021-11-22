@@ -57,11 +57,18 @@ const LOGIN_MUTATION = gql`
 `;
 
 function Login() {
-    const { register, handleSubmit, watch, formState, getValues, setError } =
-        useForm<FormValues>({
-            resolver: yupResolver(schema),
-            mode: 'onChange'
-        });
+    const {
+        register,
+        handleSubmit,
+        watch,
+        formState,
+        getValues,
+        setError,
+        clearErrors
+    } = useForm<FormValues>({
+        resolver: yupResolver(schema),
+        mode: 'onChange'
+    });
 
     const onCompleted = (data: any) => {
         const {
@@ -102,6 +109,7 @@ function Login() {
                         {...register('username')}
                         type="text"
                         placeholder="Username"
+                        onFocus={() => clearErrors()}
                     />
 
                     <FormError
@@ -112,6 +120,7 @@ function Login() {
                         {...register('password')}
                         type="password"
                         placeholder="Password"
+                        onFocus={() => clearErrors()}
                     />
                     <FormError
                         message={formState.errors.password?.message as string}
