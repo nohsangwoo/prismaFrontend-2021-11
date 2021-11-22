@@ -77,11 +77,8 @@ function Login() {
     const [login, { data, loading, error }] = useMutation(LOGIN_MUTATION, {
         onCompleted
     });
-    // const [mutateFunction, { data, loading, error }] = useMutation(INCREMENT_COUNTER);
-    console.log('data', data);
 
-    const onSubmitValid: SubmitHandler<FormValues> = data => {
-        console.log(data);
+    const onSubmitValid: SubmitHandler<FormValues> = () => {
         if (loading) {
             return;
         }
