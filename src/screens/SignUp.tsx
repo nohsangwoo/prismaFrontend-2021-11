@@ -35,7 +35,8 @@ const SignUp = () => {
                     </SubTitle>
                 </HeaderContainer>
                 <form>
-                    <Input type="text" placeholder="Name" />
+                    <Input type="text" placeholder="First Name" />
+                    <Input type="text" placeholder="Last Name" />
                     <Input type="text" placeholder="Email" />
                     <Input type="text" placeholder="Username" />
                     <Input type="password" placeholder="Password" />
