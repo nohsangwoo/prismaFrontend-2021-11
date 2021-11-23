@@ -79,12 +79,14 @@ function Login() {
             login: { ok, error, token }
         } = data;
         console.log('res data: ', data);
+        // early return
         if (!ok) {
             return setError('result', {
                 message: error
             });
         }
         dispatch(userSlice.actions.setToken(token));
+        dispatch(userSlice.actions.setLoggedIn());
     };
 
     const [login, { data, loading, error }] = useMutation(LOGIN_MUTATION, {

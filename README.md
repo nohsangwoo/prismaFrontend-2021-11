@@ -195,3 +195,7 @@ npm i --save-dev @types/aos
 ## clearError사용법 in use hook form
 
 ## save token in redux
+
+## prepare to login, logout, clearToken in redux
+
+## login success

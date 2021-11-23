@@ -9,12 +9,17 @@ const Title = styled.h1`
 
 const Home = (): JSX.Element => {
     const dispatch = useDispatch();
+
+    const onLogOut = () => {
+        dispatch(userSlice.actions.setLoggedOut());
+        dispatch(userSlice.actions.clearToken());
+    };
+
     return (
         <div>
             <Title>Home</Title>
-            <button onClick={() => dispatch(userSlice.actions.setLoggedOut())}>
-                Log Out!
-            </button>
+            <div>WELCOME HAHA!</div>
+            <button onClick={onLogOut}>Log Out!</button>
         </div>
     );
 };

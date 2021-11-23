@@ -6,7 +6,7 @@ type InitialState = {
         displayName: string;
     };
     isLoggedIn: boolean;
-    token: string;
+    token: string | null;
 };
 
 const initialState: InitialState = {
@@ -15,7 +15,7 @@ const initialState: InitialState = {
         displayName: ''
     },
     isLoggedIn: false,
-    token: ''
+    token: null
 };
 
 const userSlice = createSlice({
@@ -33,6 +33,9 @@ const userSlice = createSlice({
         },
         setToken(state, action) {
             state.token = action.payload;
+        },
+        clearToken(state) {
+            state.token = null;
         }
     }
 });
