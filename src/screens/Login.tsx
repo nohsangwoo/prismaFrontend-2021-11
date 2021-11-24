@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
     faFacebookSquare,
     faInstagram
@@ -103,7 +103,7 @@ function Login() {
         });
     };
 
-    console.log(watch()); // watch input value by passing the name of it
+    // console.log(watch()); // watch input value by passing the name of it
 
     return (
         <AuthLayout>
@@ -119,10 +119,11 @@ function Login() {
                         placeholder="Username"
                         onFocus={() => clearErrors()}
                     />
-
-                    <FormError
-                        message={formState.errors.username?.message as string}
-                    />
+                    {typeof formState.errors.username?.message === 'string' && (
+                        <FormError
+                            message={formState.errors.username?.message}
+                        />
+                    )}
 
                     <Input
                         {...register('password')}
@@ -130,19 +131,22 @@ function Login() {
                         placeholder="Password"
                         onFocus={() => clearErrors()}
                     />
-                    <FormError
-                        message={formState.errors.password?.message as string}
-                    />
+                    {typeof formState.errors.password?.message === 'string' && (
+                        <FormError
+                            message={formState.errors.password?.message}
+                        />
+                    )}
 
                     <Button
                         type="submit"
                         value={loading ? 'Loading...' : 'Log in'}
                         disabled={!formState.isValid || loading}
                     />
-
-                    <FormError
-                        message={formState?.errors?.result?.message as string}
-                    />
+                    {typeof formState?.errors?.result?.message === 'string' && (
+                        <FormError
+                            message={formState?.errors?.result?.message}
+                        />
+                    )}
                 </form>
                 <Separator />
                 <FacebookLogin>
