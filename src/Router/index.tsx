@@ -1,7 +1,7 @@
 import React from 'react';
 import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from 'screens/Home';
-import SignUp from 'screens/SignUp';
+import SignUp from 'screens/SignUp/SignUp';
 import routes from 'Router/routePath';
 import Login from 'screens/Login';
 import NotFound from 'screens/NotFound';
