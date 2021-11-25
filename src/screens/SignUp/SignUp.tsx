@@ -48,6 +48,28 @@ const schema = yup
     })
     .required();
 
+const CREATE__ACCOUNT_MUTATION = gql`
+    mutation createAccount(
+        $firstName: String!
+        $lastName: String
+        $userName: String!
+        $email: String!
+        $password: String!
+    ) {
+        createAccount(
+            firstName: $firstName
+            lastName: $lastName
+            userName: $userName
+            email: $email
+            password: $password
+        ) {
+            ok
+            error
+            id
+        }
+    }
+`;
+
 const SignUp = () => {
     const {
         register,
@@ -62,8 +84,43 @@ const SignUp = () => {
         mode: 'onChange'
     });
 
-    const onSubmitValid: SubmitHandler<FormValues> = () => {
-        console.log('onSubmit');
+    const onCompleted = (data: {
+        // react hook form 에서 submit 한 후 순간 입력된 값에서 추출
+
+        createAccount: { ok: boolean; error: string; id: number };
+    }) => {
+        // const { userName, password } = getValues();
+
+        // const {
+        //     createAccount: { ok, error, id }
+        //     //   createAccount: { ok },
+        // } = data;
+        console.log('oncomplete data: ', data);
+        // console.log(error);
+        // if (!ok) {
+        //     return;
+        // }
+    };
+
+    const [createAccount, { data, loading, error }] = useMutation(
+        CREATE__ACCOUNT_MUTATION,
+        {
+            onCompleted
+        }
+    );
+
+    const onSubmitValid: SubmitHandler<FormValues> = data => {
+        if (loading) {
+            return;
+        }
+
+        console.log('submit data!: ', data);
+        // return;
+        createAccount({
+            variables: {
+                ...data
+            }
+        });
     };
 
     console.log(watch()); // watch input value by passing the name of it
@@ -101,7 +158,12 @@ const SignUp = () => {
                 </HeaderContainer>
                 <form onSubmit={handleSubmit(onSubmitValid)}>
                     {InputParts}
-                    <Button type="submit" value="Sign up" />
+                    <Button
+                        type="submit"
+                        value="Sign up"
+                        // value={loading ? 'Loading...' : 'Sign up'}
+                        // disabled={!formState.isValid || loading}
+                    />
                 </form>
             </FormBox>
             <BottomBox
