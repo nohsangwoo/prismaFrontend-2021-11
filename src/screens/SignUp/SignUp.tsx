@@ -35,6 +35,7 @@ type FormValues = {
     email: string;
     userName: string;
     password: string;
+    result?: string;
 };
 
 const schema = yup
@@ -89,17 +90,18 @@ const SignUp = () => {
 
         createAccount: { ok: boolean; error: string; id: number };
     }) => {
-        // const { userName, password } = getValues();
-
-        // const {
-        //     createAccount: { ok, error, id }
-        //     //   createAccount: { ok },
-        // } = data;
+        const {
+            createAccount: { ok, error, id }
+            //   createAccount: { ok },
+        } = data;
         console.log('oncomplete data: ', data);
         // console.log(error);
-        // if (!ok) {
-        //     return;
-        // }
+        if (!ok) {
+            return setError('result', {
+                message: error
+            });
+        }
+        const { userName, password } = getValues();
     };
 
     const [createAccount, { data, loading, error }] = useMutation(
@@ -164,6 +166,11 @@ const SignUp = () => {
                         // value={loading ? 'Loading...' : 'Sign up'}
                         // disabled={!formState.isValid || loading}
                     />
+                    {typeof formState?.errors?.result?.message === 'string' && (
+                        <FormError
+                            message={formState?.errors?.result?.message}
+                        />
+                    )}
                 </form>
             </FormBox>
             <BottomBox
