@@ -9,9 +9,9 @@ const SFormError = styled.span`
 `;
 
 interface Props {
-    message: string;
+    message?: string;
 }
-const FormError = ({ message }: Props) => {
+const FormError = ({ message = '' }: Props) => {
     return message === '' || !message ? null : (
         <SFormError>{message}</SFormError>
     );

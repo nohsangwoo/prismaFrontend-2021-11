@@ -71,6 +71,8 @@ const SignUp = () => {
 
     console.log(watch()); // watch input value by passing the name of it
 
+    console.log('formState.errors: ', formState.errors);
+
     return (
         <AuthLayout>
             <PageTitle title="Sign up" />
@@ -87,6 +89,7 @@ const SignUp = () => {
                         type="text"
                         placeholder="First Name"
                     />
+
                     {typeof formState.errors.firstName?.message ===
                         'string' && (
                         <FormError
