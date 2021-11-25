@@ -40,11 +40,7 @@ type FormValues = {
 const schema = yup
     .object({
         // 인자로 string형식의 데이터를 추가하면 에러 메시지를 수정할수 있다.
-        firstName: yup
-            .string()
-            // .email()
-            .min(5, 'Username should be longer than 5 chars.')
-            .required(),
+        firstName: yup.string().required(),
         lastName: yup.string().required(),
         email: yup.string().email().required(),
         userName: yup.string().required(),
@@ -82,7 +78,9 @@ const SignUp = () => {
                     {...register(`${data.registerKey}`)}
                     type={data.type}
                     placeholder={data.placeholder}
-                    onFocus={() => (data.clearErrors ? clearErrors() : null)}
+                    onFocus={() =>
+                        data.clearErrors ? clearErrors(data.registerKey) : null
+                    }
                 />
                 <FormError
                     message={formState.errors[data.registerKey]?.message || ''}

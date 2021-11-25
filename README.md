@@ -203,3 +203,5 @@ npm i --save-dev @types/aos
 ## 중복제거 - login.tsx
 
 ## isolate InputParts
+
+## clearError() 조건을 조금 다른곳에다 둬야할듯

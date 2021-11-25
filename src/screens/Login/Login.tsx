@@ -113,7 +113,9 @@ function Login() {
                     {...register(`${data.registerKey}`)}
                     type={data.type}
                     placeholder={data.placeholder}
-                    onFocus={() => (data.clearErrors ? clearErrors() : null)}
+                    onFocus={() =>
+                        data.clearErrors ? clearErrors(data.registerKey) : null
+                    }
                 />
                 <FormError
                     message={formState.errors[data.registerKey]?.message || ''}
