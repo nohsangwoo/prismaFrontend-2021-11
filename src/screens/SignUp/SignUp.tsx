@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { faInstagram } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styled from 'styled-components';
@@ -16,7 +17,6 @@ import * as yup from 'yup';
 import { gql, useMutation } from '@apollo/client';
 import FormError from 'components/auth/FormError';
 import registerList from './registerList';
-
 const HeaderContainer = styled.div`
     display: flex;
     flex-direction: column;
@@ -72,6 +72,7 @@ const CREATE__ACCOUNT_MUTATION = gql`
 `;
 
 const SignUp = () => {
+    const navigate = useNavigate();
     const {
         register,
         handleSubmit,
@@ -100,6 +101,8 @@ const SignUp = () => {
             });
         }
         const { userName, password } = getValues();
+
+        navigate(routes.home);
     };
 
     const [createAccount, { data, loading, error }] = useMutation(

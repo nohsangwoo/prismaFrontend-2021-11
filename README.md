@@ -209,3 +209,4 @@ npm i --save-dev @types/aos
 ## Signup - 백엔드 api-createAccount 요청 작업 구현
 
 -   result error 적용
+-   redirect to home after sign up
