@@ -92,10 +92,8 @@ const SignUp = () => {
     }) => {
         const {
             createAccount: { ok, error, id }
-            //   createAccount: { ok },
         } = data;
-        console.log('oncomplete data: ', data);
-        // console.log(error);
+        // early return
         if (!ok) {
             return setError('result', {
                 message: error
@@ -112,12 +110,10 @@ const SignUp = () => {
     );
 
     const onSubmitValid: SubmitHandler<FormValues> = data => {
+        // early return
         if (loading) {
             return;
         }
-
-        console.log('submit data!: ', data);
-        // return;
         createAccount({
             variables: {
                 ...data
@@ -127,10 +123,7 @@ const SignUp = () => {
 
     console.log(watch()); // watch input value by passing the name of it
 
-    console.log('formState.errors: ', formState.errors);
-
     const InputParts = registerList.map((data, index) => {
-        console.log('index', index);
         return (
             <div key={index}>
                 <Input

@@ -79,7 +79,6 @@ function Login() {
         const {
             login: { ok, error, token }
         } = data;
-        console.log('res data: ', data);
         // early return
         if (!ok) {
             return setError('result', {
