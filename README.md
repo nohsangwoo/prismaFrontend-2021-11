@@ -201,3 +201,5 @@ npm i --save-dev @types/aos
 ## login success
 
 ## 중복제거 - login.tsx
+
+## isolate InputParts

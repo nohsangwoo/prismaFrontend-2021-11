@@ -15,6 +15,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { gql, useMutation } from '@apollo/client';
 import FormError from 'components/auth/FormError';
+import registerList from './registerList';
 
 const HeaderContainer = styled.div`
     display: flex;
@@ -35,13 +36,6 @@ type FormValues = {
     userName: string;
     password: string;
 };
-
-type registerListProps = {
-    registerKey: `firstName` | `lastName` | `email` | `userName` | `password`;
-    placeholder: string;
-    type: string;
-    clearErrors: boolean;
-}[];
 
 const schema = yup
     .object({
@@ -80,42 +74,10 @@ const SignUp = () => {
 
     console.log('formState.errors: ', formState.errors);
 
-    const registerList: registerListProps = [
-        {
-            registerKey: `firstName`,
-            placeholder: 'First Name',
-            type: 'text',
-            clearErrors: true
-        },
-        {
-            registerKey: `lastName`,
-            placeholder: 'Last Name',
-            type: 'text',
-            clearErrors: true
-        },
-        {
-            registerKey: `email`,
-            placeholder: 'Email',
-            type: 'email',
-            clearErrors: true
-        },
-        {
-            registerKey: `userName`,
-            placeholder: 'User Name',
-            type: 'text',
-            clearErrors: true
-        },
-        {
-            registerKey: `password`,
-            placeholder: 'Password',
-            type: 'password',
-            clearErrors: true
-        }
-    ];
-
-    const InputParts = registerList.map(data => {
+    const InputParts = registerList.map((data, index) => {
+        console.log('index', index);
         return (
-            <>
+            <div key={index}>
                 <Input
                     {...register(`${data.registerKey}`)}
                     type={data.type}
@@ -125,7 +87,7 @@ const SignUp = () => {
                 <FormError
                     message={formState.errors[data.registerKey]?.message || ''}
                 />
-            </>
+            </div>
         );
     });
 

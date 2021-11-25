@@ -7,11 +7,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import AuthLayout from 'components/auth/AuthLayout';
 import FormBox from 'components/auth/FormBox';
 import styled from 'styled-components';
-import BottomBox from '../components/auth/BottomBox';
-import Button from '../components/auth/Button';
-import Input from '../components/auth/Input';
-import Separator from '../components/auth/Separator';
-import routes from '../Router/routePath';
+import BottomBox from '../../components/auth/BottomBox';
+import Button from '../../components/auth/Button';
+import Input from '../../components/auth/Input';
+import Separator from '../../components/auth/Separator';
+import routes from '../../Router/routePath';
 import PageTitle from 'components/PageTitle';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -20,6 +20,7 @@ import { gql, useMutation } from '@apollo/client';
 import FormError from 'components/auth/FormError';
 import { useDispatch } from 'react-redux';
 import userSlice from 'store/reducers/userSlice';
+import registerList from './registerList';
 
 const FacebookLogin = styled.div`
     color: #385285;
@@ -35,13 +36,6 @@ type FormValues = {
     result?: string;
     // result: string;
 };
-
-type registerListProps = {
-    registerKey: `username` | `password`;
-    placeholder: string;
-    type: string;
-    clearErrors: boolean;
-}[];
 
 const schema = yup
     .object({
@@ -111,25 +105,10 @@ function Login() {
     };
 
     // console.log(watch()); // watch input value by passing the name of it
-    console.log('formState.errors: ', formState[`errors`]);
-    const registerList: registerListProps = [
-        {
-            registerKey: `username`,
-            placeholder: 'Username',
-            type: 'text',
-            clearErrors: true
-        },
-        {
-            registerKey: `password`,
-            placeholder: 'Password',
-            type: 'password',
-            clearErrors: true
-        }
-    ];
 
-    const InputParts = registerList.map(data => {
+    const InputParts = registerList.map((data, index) => {
         return (
-            <>
+            <div key={index}>
                 <Input
                     {...register(`${data.registerKey}`)}
                     type={data.type}
@@ -139,7 +118,7 @@ function Login() {
                 <FormError
                     message={formState.errors[data.registerKey]?.message || ''}
                 />
-            </>
+            </div>
         );
     });
 
