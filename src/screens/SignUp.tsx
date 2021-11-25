@@ -36,6 +36,13 @@ type FormValues = {
     password: string;
 };
 
+type registerListProps = {
+    registerKey: `firstName` | `lastName` | `email` | `userName` | `password`;
+    placeholder: string;
+    type: string;
+    clearErrors: boolean;
+}[];
+
 const schema = yup
     .object({
         // 인자로 string형식의 데이터를 추가하면 에러 메시지를 수정할수 있다.
@@ -73,6 +80,55 @@ const SignUp = () => {
 
     console.log('formState.errors: ', formState.errors);
 
+    const registerList: registerListProps = [
+        {
+            registerKey: `firstName`,
+            placeholder: 'First Name',
+            type: 'text',
+            clearErrors: true
+        },
+        {
+            registerKey: `lastName`,
+            placeholder: 'Last Name',
+            type: 'text',
+            clearErrors: true
+        },
+        {
+            registerKey: `email`,
+            placeholder: 'Email',
+            type: 'email',
+            clearErrors: true
+        },
+        {
+            registerKey: `userName`,
+            placeholder: 'User Name',
+            type: 'text',
+            clearErrors: true
+        },
+        {
+            registerKey: `password`,
+            placeholder: 'Password',
+            type: 'password',
+            clearErrors: true
+        }
+    ];
+
+    const InputParts = registerList.map(data => {
+        return (
+            <>
+                <Input
+                    {...register(`${data.registerKey}`)}
+                    type={data.type}
+                    placeholder={data.placeholder}
+                    onFocus={() => (data.clearErrors ? clearErrors() : null)}
+                />
+                <FormError
+                    message={formState.errors[data.registerKey]?.message || ''}
+                />
+            </>
+        );
+    });
+
     return (
         <AuthLayout>
             <PageTitle title="Sign up" />
@@ -84,58 +140,7 @@ const SignUp = () => {
                     </SubTitle>
                 </HeaderContainer>
                 <form onSubmit={handleSubmit(onSubmitValid)}>
-                    <Input
-                        {...register('firstName')}
-                        type="text"
-                        placeholder="First Name"
-                    />
-
-                    {typeof formState.errors.firstName?.message ===
-                        'string' && (
-                        <FormError
-                            message={formState.errors.firstName?.message}
-                        />
-                    )}
-                    <Input
-                        {...register('lastName')}
-                        type="text"
-                        placeholder="Last Name"
-                    />
-                    {typeof formState.errors.lastName?.message === 'string' && (
-                        <FormError
-                            message={formState.errors.lastName?.message}
-                        />
-                    )}
-                    <Input
-                        {...register('email')}
-                        type="text"
-                        placeholder="Email"
-                    />
-                    {typeof formState.errors.lastName?.message === 'string' && (
-                        <FormError
-                            message={formState.errors.lastName?.message}
-                        />
-                    )}
-                    <Input
-                        {...register('userName')}
-                        type="text"
-                        placeholder="Username"
-                    />
-                    {typeof formState.errors.userName?.message === 'string' && (
-                        <FormError
-                            message={formState.errors.userName?.message}
-                        />
-                    )}
-                    <Input
-                        {...register('password')}
-                        type="password"
-                        placeholder="Password"
-                    />
-                    {typeof formState.errors.password?.message === 'string' && (
-                        <FormError
-                            message={formState.errors.password?.message}
-                        />
-                    )}
+                    {InputParts}
                     <Button type="submit" value="Sign up" />
                 </form>
             </FormBox>
