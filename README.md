@@ -215,3 +215,7 @@ npm i --save-dev @types/aos
 ## darkmode
 
 -   styles폴더 에 관련내용 몰아서 넣어둠
+
+## header layout
+
+-   navigation part 구현
