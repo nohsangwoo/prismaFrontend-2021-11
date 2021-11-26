@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, NavigateFunction } from 'react-router-dom';
 import { faInstagram } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styled from 'styled-components';
@@ -72,7 +72,7 @@ const CREATE__ACCOUNT_MUTATION = gql`
 `;
 
 const SignUp = () => {
-    const navigate = useNavigate();
+    const navigate: NavigateFunction = useNavigate();
     const {
         register,
         handleSubmit,
@@ -102,7 +102,13 @@ const SignUp = () => {
         }
         const { userName, password } = getValues();
 
-        navigate(routes.home);
+        navigate(routes.home, {
+            state: {
+                message: 'Account created. Please log in.',
+                userName,
+                password
+            }
+        });
     };
 
     const [createAccount, { data, loading, error }] = useMutation(

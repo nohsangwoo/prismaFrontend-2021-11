@@ -21,6 +21,8 @@ import FormError from 'components/auth/FormError';
 import { useDispatch } from 'react-redux';
 import userSlice from 'store/reducers/userSlice';
 import registerList from './registerList';
+import { useLocation } from 'react-router-dom';
+import { Location } from 'history';
 
 const FacebookLogin = styled.div`
     color: #385285;
@@ -28,6 +30,10 @@ const FacebookLogin = styled.div`
         margin-left: 10px;
         font-weight: 600;
     }
+`;
+
+const Notification = styled.div`
+    color: #2ecc71;
 `;
 
 type FormValues = {
@@ -62,6 +68,8 @@ const LOGIN_MUTATION = gql`
 function Login() {
     const dispatch = useDispatch();
 
+    const location = useLocation();
+
     const {
         register,
         handleSubmit,
@@ -72,7 +80,11 @@ function Login() {
         clearErrors
     } = useForm<FormValues>({
         resolver: yupResolver(schema),
-        mode: 'onChange'
+        mode: 'onChange',
+        defaultValues: {
+            username: location?.state?.userName || '',
+            password: location?.state?.password || ''
+        }
     });
 
     const onCompleted = (data: any) => {
@@ -115,6 +127,7 @@ function Login() {
                     onFocus={() =>
                         data.clearErrors ? clearErrors(data.registerKey) : null
                     }
+                    autoComplete={'off'}
                 />
                 <FormError
                     message={formState.errors[data.registerKey]?.message || ''}
@@ -130,7 +143,8 @@ function Login() {
                 <div>
                     <FontAwesomeIcon icon={faInstagram} size="3x" />
                 </div>
-                <form onSubmit={handleSubmit(onSubmitValid)}>
+                <Notification>{location.state?.message} </Notification>
+                <form onSubmit={handleSubmit(onSubmitValid)} autoComplete="off">
                     {InputParts}
 
                     {typeof formState.errors.password?.message === 'string' && (
