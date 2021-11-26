@@ -211,3 +211,7 @@ npm i --save-dev @types/aos
 -   result error 적용
 -   redirect to home after sign up
 -   회원 가입완료 됐다면 login페이지로 username,password,message props를 전달 후 login페이지에서 username,password, message를 이용하여 로그인 폼 및 input에 적절히 값 배치
+
+## darkmode
+
+-   styles폴더 에 관련내용 몰아서 넣어둠
