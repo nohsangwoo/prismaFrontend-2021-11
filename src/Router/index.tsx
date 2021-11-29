@@ -7,7 +7,6 @@ import Login from 'screens/Login';
 import NotFound from 'screens/NotFound';
 import { useSelector } from 'react-redux';
 import { RootState } from 'store/store';
-import Header from 'components/Header';
 import Layout from 'components/Layout';
 
 const Index = () => {
@@ -30,12 +29,13 @@ const Index = () => {
                                 <Login />
                             )
                         }
-                    ></Route>
+                    />
 
                     {!isLoggedIn ? (
                         <Route path={routes.signUp} element={<SignUp />} />
                     ) : null}
-                    <Route path="*" element={<NotFound />}></Route>
+
+                    <Route path="*" element={<NotFound />} />
                 </Routes>
             </>
         </Router>
