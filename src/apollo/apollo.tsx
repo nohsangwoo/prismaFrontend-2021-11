@@ -5,15 +5,41 @@ import {
     makeVar,
     NormalizedCacheObject
 } from '@apollo/client';
-import { TOKEN, DARK_MODE } from './constance';
+import { DARK_MODE, TOKEN } from './constance';
 import { setContext } from '@apollo/client/link/context';
-import { splitLink } from './splitLink';
+import reduxStore from 'store/store';
+import userSlice from 'store/reducers/userSlice';
+// import { splitLink } from './splitLink';
 
-export const isLoggedInVar = makeVar(false);
+export const isLoggedInVar = makeVar(Boolean(localStorage.getItem(TOKEN)));
 
-// darkMode의 상태를 위한 reactive variable
-// darkmode설정이 localstorage에 존재하면 true 아니라면 false로 초기화
+export const logUserIn = (token: string) => {
+    reduxStore.dispatch(userSlice.actions.setToken(token));
+    reduxStore.dispatch(userSlice.actions.setLoggedIn());
+};
+
+export const logUserOut = () => {
+    reduxStore.dispatch(userSlice.actions.setLoggedOut());
+    reduxStore.dispatch(userSlice.actions.clearToken());
+
+    window.location.reload();
+};
+
 export const darkModeVar = makeVar(Boolean(localStorage.getItem(DARK_MODE)));
+
+export const enableDarkMode = () => {
+    localStorage.setItem(DARK_MODE, 'enabled');
+    darkModeVar(true);
+};
+
+export const disableDarkMode = () => {
+    localStorage.removeItem(DARK_MODE);
+    darkModeVar(false);
+};
+
+const token = reduxStore.getState().users.token;
+
+console.log('token값: ', token);
 
 // backend와 연결하기 위한 주소 세팅
 const httpLink = createHttpLink({
@@ -34,7 +60,8 @@ const authLink = setContext((_, { headers }) => {
             // client에선 headers{token:"some token"}으로 보내는데
             // backend에선 headers{tokkkkken: "some token"} 이란 형식으로 받아서 사용한다던지
             // 이런경우를 방지하기위해 키값을 잘 지정해줘야함
-            token: localStorage.getItem(TOKEN)
+            // authorization: localStorage.getItem(TOKEN)
+            authorization: reduxStore.getState().users.token
         }
     };
 });
@@ -51,17 +78,8 @@ const cache = new InMemoryCache({
     }
 });
 
-//     {
-//     typePolicies: {
-//         User: {
-//             // 정확히 어떤 필드를 고유식별자로 설정할건지 설정함
-//             keyFields: obj => `User:${obj.username}`
-//         }
-//     }
-// }
-
 export const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
-    // link: splitLink,
+    // link: authLink.concat(splitLink),
     link: authLink.concat(httpLink),
     cache
 });

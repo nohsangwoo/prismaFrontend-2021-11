@@ -18,11 +18,9 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { gql, useMutation } from '@apollo/client';
 import FormError from 'components/auth/FormError';
-import { useDispatch } from 'react-redux';
-import userSlice from 'store/reducers/userSlice';
 import registerList from './registerList';
 import { useLocation } from 'react-router-dom';
-import { Location } from 'history';
+import { logUserIn } from 'apollo/apollo';
 
 const FacebookLogin = styled.div`
     color: #385285;
@@ -66,8 +64,6 @@ const LOGIN_MUTATION = gql`
 `;
 
 function Login() {
-    const dispatch = useDispatch();
-
     const location = useLocation();
 
     const {
@@ -97,8 +93,7 @@ function Login() {
                 message: error
             });
         }
-        dispatch(userSlice.actions.setToken(token));
-        dispatch(userSlice.actions.setLoggedIn());
+        logUserIn(token);
     };
 
     const [login, { data, loading, error }] = useMutation(LOGIN_MUTATION, {
