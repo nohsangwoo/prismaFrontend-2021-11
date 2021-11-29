@@ -5,7 +5,7 @@ import {
     makeVar,
     NormalizedCacheObject
 } from '@apollo/client';
-import { DARK_MODE, TOKEN } from './constance';
+import { TOKEN } from './constance';
 import { setContext } from '@apollo/client/link/context';
 import reduxStore from 'store/store';
 import userSlice from 'store/reducers/userSlice';
@@ -13,6 +13,7 @@ import userSlice from 'store/reducers/userSlice';
 
 export const isLoggedInVar = makeVar(Boolean(localStorage.getItem(TOKEN)));
 
+// 여기서 dipatch 하지 않으면 token보낼때 좀 문제가 생겨서 로그인 로그아웃 정도는 여기서 구현함
 export const logUserIn = (token: string) => {
     reduxStore.dispatch(userSlice.actions.setToken(token));
     reduxStore.dispatch(userSlice.actions.setLoggedIn());
@@ -21,25 +22,10 @@ export const logUserIn = (token: string) => {
 export const logUserOut = () => {
     reduxStore.dispatch(userSlice.actions.setLoggedOut());
     reduxStore.dispatch(userSlice.actions.clearToken());
-
-    window.location.reload();
+    // window.location.reload();
 };
 
-export const darkModeVar = makeVar(Boolean(localStorage.getItem(DARK_MODE)));
-
-export const enableDarkMode = () => {
-    localStorage.setItem(DARK_MODE, 'enabled');
-    darkModeVar(true);
-};
-
-export const disableDarkMode = () => {
-    localStorage.removeItem(DARK_MODE);
-    darkModeVar(false);
-};
-
-const token = reduxStore.getState().users.token;
-
-console.log('token값: ', token);
+// end of login logout for current information
 
 // backend와 연결하기 위한 주소 세팅
 const httpLink = createHttpLink({

@@ -224,3 +224,4 @@ npm i --save-dev @types/aos
 
 -   지금 저장된 current token이 정말 내 token이 맞는지 확인하는 검증 작업이 필요함
 -   useUser.tsx에서 작업함
+-   토큰이 변조됐을 경우 강제 로그아웃 시켜준다.

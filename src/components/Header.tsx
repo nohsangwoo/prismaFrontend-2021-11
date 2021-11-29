@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 import { RootState } from 'store/store';
 import { Link } from 'react-router-dom';
-import useUser from 'hooks/useUser';
+import UseUser from 'hooks/useUser';
 import routes from 'Router/routePath';
 
 const SHeader = styled.header`
@@ -53,10 +53,9 @@ function Header() {
     const isLoggedIn = useSelector(
         (state: RootState) => state.users.isLoggedIn
     );
-    const loggedInUser = useUser();
-
     return (
         <SHeader>
+            <UseUser />
             <Wrapper>
                 <Column>
                     <FontAwesomeIcon icon={faInstagram} size="2x" />
