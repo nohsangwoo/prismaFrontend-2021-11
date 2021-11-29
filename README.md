@@ -219,3 +219,8 @@ npm i --save-dev @types/aos
 ## header layout
 
 -   navigation part 구현
+
+## validate me!
+
+-   지금 저장된 current token이 정말 내 token이 맞는지 확인하는 검증 작업이 필요함
+-   useUser.tsx에서 작업함

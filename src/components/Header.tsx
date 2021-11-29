@@ -1,4 +1,3 @@
-import { useReactiveVar } from '@apollo/client';
 import { faInstagram } from '@fortawesome/free-brands-svg-icons';
 import { faCompass, faUser } from '@fortawesome/free-regular-svg-icons';
 import { faHome } from '@fortawesome/free-solid-svg-icons';
@@ -6,6 +5,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 import { RootState } from 'store/store';
+import { Link } from 'react-router-dom';
+import useUser from 'hooks/useUser';
+import routes from 'Router/routePath';
 
 const SHeader = styled.header`
     width: 100%;
@@ -31,10 +33,28 @@ const Icon = styled.span`
     margin-left: 15px;
 `;
 
+const Btn = styled.span`
+    background-color: ${props => props.theme.accent};
+    color: white;
+    border-radius: 4px;
+    padding: 5px 15px;
+    font-weight: 600;
+`;
+
+const Button = styled.span`
+    background-color: ${props => props.theme.accent};
+    border-radius: 4px;
+    padding: 4px 15px;
+    color: white;
+    font-weight: 600;
+`;
+
 function Header() {
     const isLoggedIn = useSelector(
         (state: RootState) => state.users.isLoggedIn
     );
+    const loggedInUser = useUser();
+
     return (
         <SHeader>
             <Wrapper>
@@ -54,7 +74,11 @@ function Header() {
                                 <FontAwesomeIcon icon={faUser} size="lg" />
                             </Icon>
                         </>
-                    ) : null}
+                    ) : (
+                        <Link to={routes.home}>
+                            <Button>Login</Button>
+                        </Link>
+                    )}
                 </Column>
             </Wrapper>
         </SHeader>
