@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { gql, useQuery } from '@apollo/client';
 import { useSelector } from 'react-redux';
 import { RootState } from 'store/store';
@@ -7,13 +7,14 @@ import { logUserOut } from 'apollo/apollo';
 const ME_QUERY = gql`
     query me {
         me {
+            id
             userName
             avatar
         }
     }
 `;
 
-const useUser = (): JSX.Element => {
+const useUser = () => {
     const hasToken = useSelector((state: RootState) => state.users.isLoggedIn);
     const { data } = useQuery(ME_QUERY, {
         skip: !hasToken
@@ -23,12 +24,7 @@ const useUser = (): JSX.Element => {
         if (data?.me === null) {
             logUserOut();
         }
-        if (data?.me !== null) {
-            // logUserOut();
-            console.log('data is here:', data?.me);
-        }
     }, [data]);
-    // console.log('useUser result: ', data, error);
-    return <></>;
+    return { data };
 };
 export default useUser;

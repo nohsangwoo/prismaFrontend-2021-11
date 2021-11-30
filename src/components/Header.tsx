@@ -6,8 +6,9 @@ import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 import { RootState } from 'store/store';
 import { Link } from 'react-router-dom';
-import UseUser from 'hooks/useUser';
 import routes from 'Router/routePath';
+import useUser from 'hooks/useUser';
+import Avatar from './Avatar';
 
 const SHeader = styled.header`
     width: 100%;
@@ -49,13 +50,20 @@ const Button = styled.span`
     font-weight: 600;
 `;
 
+const IconsContainer = styled.div`
+    display: flex;
+    align-items: center;
+`;
+
 function Header() {
     const isLoggedIn = useSelector(
         (state: RootState) => state.users.isLoggedIn
     );
+    const { data } = useUser();
+
+    console.log(data);
     return (
         <SHeader>
-            <UseUser />
             <Wrapper>
                 <Column>
                     <FontAwesomeIcon icon={faInstagram} size="2x" />
@@ -63,15 +71,20 @@ function Header() {
                 <Column>
                     {isLoggedIn ? (
                         <>
-                            <Icon>
-                                <FontAwesomeIcon icon={faHome} size="lg" />
-                            </Icon>
-                            <Icon>
-                                <FontAwesomeIcon icon={faCompass} size="lg" />
-                            </Icon>
-                            <Icon>
-                                <FontAwesomeIcon icon={faUser} size="lg" />
-                            </Icon>
+                            <IconsContainer>
+                                <Icon>
+                                    <FontAwesomeIcon icon={faHome} size="lg" />
+                                </Icon>
+                                <Icon>
+                                    <FontAwesomeIcon
+                                        icon={faCompass}
+                                        size="lg"
+                                    />
+                                </Icon>
+                                <Icon>
+                                    <Avatar url={data?.me?.avatar} lg={true} />
+                                </Icon>
+                            </IconsContainer>
                         </>
                     ) : (
                         <Link to={routes.home}>
