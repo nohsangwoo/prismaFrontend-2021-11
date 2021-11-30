@@ -19,7 +19,11 @@ interface Props {
 }
 
 const Avatar = ({ url = '', lg = false }: Props): JSX.Element => {
-    return <SAvatar lg={lg}>{url !== '' ? <Img src={url} /> : null}</SAvatar>;
+    return (
+        <SAvatar lg={lg}>
+            {url !== '' ? <Img src={url} alt="avatar" /> : null}
+        </SAvatar>
+    );
 };
 
 export default Avatar;
