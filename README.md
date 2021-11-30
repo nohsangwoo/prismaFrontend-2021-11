@@ -229,3 +229,11 @@ npm i --save-dev @types/aos
 ## avartar
 
 -   유저가 로그인된상태라면 header의 오른쪽 상단에 profile아이콘 대신 유저의 avatar 아이콘을 보여준다.
+
+## upload type bug fix
+
+home
+
+-   https://www.apollographql.com/docs/apollo-server/data/file-uploads/
+
+## set basic layout on Home

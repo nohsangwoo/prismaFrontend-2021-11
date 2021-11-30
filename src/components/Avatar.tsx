@@ -15,7 +15,7 @@ const Img = styled.img`
 
 interface Props {
     url: string;
-    lg: boolean;
+    lg?: boolean;
 }
 
 const Avatar = ({ url = '', lg = false }: Props): JSX.Element => {
