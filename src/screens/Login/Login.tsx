@@ -21,6 +21,7 @@ import FormError from 'components/auth/FormError';
 import registerList from './registerList';
 import { useLocation } from 'react-router-dom';
 import { logUserIn } from 'apollo/apollo';
+import { login, loginVariables } from '__generated__/login';
 
 const FacebookLogin = styled.div`
     color: #385285;
@@ -35,7 +36,7 @@ const Notification = styled.div`
 `;
 
 type FormValues = {
-    username: string;
+    userName: string;
     password: string;
     result?: string;
     // result: string;
@@ -44,10 +45,10 @@ type FormValues = {
 const schema = yup
     .object({
         // 인자로 string형식의 데이터를 추가하면 에러 메시지를 수정할수 있다.
-        username: yup
+        userName: yup
             .string()
             // .email()
-            .min(5, 'Username should be longer than 5 chars.')
+            .min(5, 'userName should be longer than 5 chars.')
             .required(),
         password: yup.string().required()
     })
@@ -78,35 +79,33 @@ function Login() {
         resolver: yupResolver(schema),
         mode: 'onChange',
         defaultValues: {
-            username: location?.state?.userName || '',
+            userName: location?.state?.userName || '',
             password: location?.state?.password || ''
         }
     });
 
-    const onCompleted = (data: any) => {
-        const {
-            login: { ok, error, token }
-        } = data;
-        // early return
-        if (!ok) {
-            return setError('result', {
-                message: error
-            });
+    const [loginMutation, { data, loading, error }] = useMutation<
+        login,
+        loginVariables
+    >(LOGIN_MUTATION, {
+        onCompleted: data => {
+            // early return
+            if (!data.login.ok) {
+                return setError('result', {
+                    message: data.login.error || ''
+                });
+            }
+            logUserIn(data?.login?.token);
         }
-        logUserIn(token);
-    };
-
-    const [login, { data, loading, error }] = useMutation(LOGIN_MUTATION, {
-        onCompleted
     });
 
     const onSubmitValid: SubmitHandler<FormValues> = () => {
         if (loading) {
             return;
         }
-        const { username, password } = getValues();
-        login({
-            variables: { userName: username, password }
+        const { userName, password } = getValues();
+        loginMutation({
+            variables: { userName, password }
         });
     };
 

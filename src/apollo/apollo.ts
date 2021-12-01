@@ -14,7 +14,7 @@ import userSlice from 'store/reducers/userSlice';
 export const isLoggedInVar = makeVar(Boolean(localStorage.getItem(TOKEN)));
 
 // 여기서 dipatch 하지 않으면 token보낼때 좀 문제가 생겨서 로그인 로그아웃 정도는 여기서 구현함
-export const logUserIn = (token: string) => {
+export const logUserIn = (token: string | null) => {
     reduxStore.dispatch(userSlice.actions.setToken(token));
     reduxStore.dispatch(userSlice.actions.setLoggedIn());
 };

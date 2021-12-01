@@ -276,3 +276,17 @@ const [toggleLikeMutation, { loading }] = useMutation(
 
 -   apollo codegen
     ref: https://github.com/apollographql/apollo-tooling#apollo-clientcodegen-output
+    Query생성 후
+
+```
+apollo client:codegen src/__generated__ --target=typescript --outputFlat
+```
+
+을 실행하면 됨(이때 백엔드가 실행되고 있어야한다.)
+
+이 후 \_\_generate\_\_ 폴더에 graphql관련 ts내용이 생성된다..
+
+Home.tsx의 seeFeed, Login.tsx의 loginMutation에 시범 적용완료
+
+-   issue 1
+    apollo와 graphql을 둘다 전역설치(-g) 해야지만 실행된다는 말도 있다.(일단 여기선 그런적 없음)

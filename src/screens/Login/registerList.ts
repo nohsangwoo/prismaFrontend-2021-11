@@ -1,5 +1,5 @@
 type registerListProps = {
-    registerKey: `username` | `password`;
+    registerKey: `userName` | `password`;
     placeholder: string;
     type: string;
     clearErrors: boolean;
@@ -7,7 +7,7 @@ type registerListProps = {
 
 const registerList: registerListProps = [
     {
-        registerKey: `username`,
+        registerKey: `userName`,
         placeholder: 'Username',
         type: 'text',
         clearErrors: true

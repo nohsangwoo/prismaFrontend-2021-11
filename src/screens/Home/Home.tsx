@@ -3,6 +3,7 @@ import { gql, useQuery } from '@apollo/client';
 import { logUserOut } from 'apollo/apollo';
 import { COMMENT_FRAGMENT, PHOTO_FRAGMENT } from 'fragments';
 import Photo from 'components/feed/Photo';
+import { seeFeed } from '__generated__/seeFeed';
 
 export const FEED_QUERY = gql`
     query seeFeed($endCursor: Int) {
@@ -26,7 +27,7 @@ export const FEED_QUERY = gql`
 `;
 
 const Home = (): JSX.Element => {
-    const { data } = useQuery(FEED_QUERY);
+    const { data } = useQuery<seeFeed>(FEED_QUERY);
 
     const onLogOut = () => {
         logUserOut();
