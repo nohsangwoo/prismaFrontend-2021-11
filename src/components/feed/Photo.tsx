@@ -11,6 +11,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styled from 'styled-components';
 import Avatar from '../Avatar';
 import { FatText } from 'styles/sharedStyle';
+import { FEED_QUERY } from 'screens/Home/Home';
 
 const TOGGLE_LIKE_MUTATION = gql`
     mutation toggleLike($id: Int!) {
@@ -89,7 +90,8 @@ const Photo = ({ id, user, file, isLiked, likes }: Props) => {
         {
             variables: {
                 id
-            }
+            },
+            refetchQueries: [{ query: FEED_QUERY }]
         }
     );
 

@@ -243,3 +243,19 @@ home
 ## liking photos
 
 -   feed의 photo 부분을 번들링하고 like기능을 추가한다.
+
+## refetching queries
+
+ex)
+
+```
+const [toggleLikeMutation, { loading }] = useMutation(
+    TOGGLE_LIKE_MUTATION,
+    {
+        variables: {
+            id
+        },
+        refetchQueries: [{ query: FEED_QUERY, variables: { id } }]
+    }
+);
+```

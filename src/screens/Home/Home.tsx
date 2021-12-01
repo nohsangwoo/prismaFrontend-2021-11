@@ -4,7 +4,7 @@ import { logUserOut } from 'apollo/apollo';
 import { COMMENT_FRAGMENT, PHOTO_FRAGMENT } from 'fragments';
 import Photo from 'components/feed/Photo';
 
-const FEED_QUERY = gql`
+export const FEED_QUERY = gql`
     query seeFeed($endCursor: Int) {
         seeFeed(endCursor: $endCursor) {
             ...PhotoFragment
