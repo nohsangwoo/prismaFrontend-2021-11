@@ -1,6 +1,6 @@
 module.exports = {
     client: {
-        includes: ['./**/*.ts'],
+        includes: ['./src/**/*.{tsx,ts}'],
         tagName: 'gql',
         service: {
             name: 'prisma-client-js',

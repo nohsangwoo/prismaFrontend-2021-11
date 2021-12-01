@@ -259,3 +259,20 @@ const [toggleLikeMutation, { loading }] = useMutation(
     }
 );
 ```
+
+-   but 포함된부분이 전부 refetching되기때문에 코스트가 비싸서 작은 단위의 fetching만 refetching 한다.
+    (상단의 feed는 큰 단위의 fetch내용이기때문에 캐쉬를 건드리는 방식으로 전환한다.)
+
+## TS SETUP for graphql (frontend)
+
+-   apollo 설치
+    ref: https://github.com/apollographql/apollo-tooling
+    npm install -g apollo
+
+-   create Configuration file
+    ref: https://github.com/apollographql/apollo-tooling#configuration
+    ref2: https://www.apollographql.com/docs/devtools/apollo-config/
+    규칙에따라서 config파일 생성(apollo.config.js)
+
+-   apollo codegen
+    ref: https://github.com/apollographql/apollo-tooling#apollo-clientcodegen-output
