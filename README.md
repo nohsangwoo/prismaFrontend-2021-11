@@ -239,3 +239,7 @@ home
 ## set basic layout on Home
 
 ## feed
+
+## liking photos
+
+-   feed의 photo 부분을 번들링하고 like기능을 추가한다.
