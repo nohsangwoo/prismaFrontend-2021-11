@@ -244,7 +244,7 @@ home
 
 -   feed의 photo 부분을 번들링하고 like기능을 추가한다.
 
-## refetching queries
+## refetching queries (cache)
 
 ex)
 
@@ -263,7 +263,7 @@ const [toggleLikeMutation, { loading }] = useMutation(
 -   but 포함된부분이 전부 refetching되기때문에 코스트가 비싸서 작은 단위의 fetching만 refetching 한다.
     (상단의 feed는 큰 단위의 fetch내용이기때문에 캐쉬를 건드리는 방식으로 전환한다.)
 
-## TS SETUP for graphql (frontend)
+## TS(TYPESCRIPT) SETUP for graphql (frontend)
 
 -   apollo 설치
     ref: https://github.com/apollographql/apollo-tooling
@@ -288,6 +288,10 @@ apollo client:codegen src/__generated__ --target=typescript --outputFlat
 
 Home.tsx의 seeFeed, Login.tsx의 loginMutation에 시범 적용완료
 
--   기존 **generated**폴더를 지우고 다시 생성
+-   기존 \_\_generated\_\_폴더를 지우고 다시 생성
 -   issue 1
     apollo와 graphql을 둘다 전역설치(-g) 해야지만 실행된다는 말도 있다.(일단 여기선 그런적 없음)
+
+## 쿼리 캐싱(cashe) 방법 2
+
+-   refetchingQueries로 일단 해결한다음 나중에 직접 캐시덮어씌우기로 해결해준다.
