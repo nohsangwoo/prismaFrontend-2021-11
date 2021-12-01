@@ -288,5 +288,6 @@ apollo client:codegen src/__generated__ --target=typescript --outputFlat
 
 Home.tsx의 seeFeed, Login.tsx의 loginMutation에 시범 적용완료
 
+-   기존 **generated**폴더를 지우고 다시 생성
 -   issue 1
     apollo와 graphql을 둘다 전역설치(-g) 해야지만 실행된다는 말도 있다.(일단 여기선 그런적 없음)
