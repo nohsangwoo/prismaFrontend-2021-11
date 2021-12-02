@@ -75,6 +75,24 @@ const Likes = styled(FatText)`
     display: block;
 `;
 
+const Comments = styled.div`
+    margin-top: 20px;
+`;
+
+const Comment = styled.div``;
+
+const CommentCaption = styled.span`
+    margin-left: 10px;
+`;
+
+const CommentCount = styled.span`
+    opacity: 0.7;
+    margin: 10px 0px;
+    display: block;
+    font-weight: 600;
+    font-size: 10px;
+`;
+
 interface Props {
     id: number;
     user: {
@@ -82,10 +100,31 @@ interface Props {
         userName: string;
     };
     file: string;
+    caption: string;
     isLiked: boolean;
     likes: number;
+    commentNumber?: number;
+    comments: {
+        id: number;
+        user: {
+            username: string;
+            avatar: string;
+        };
+        payload: string;
+        isMine: boolean;
+        createdAt: string;
+    }[];
 }
-const Photo = ({ id, user, file, isLiked, likes }: Props) => {
+const Photo = ({
+    id,
+    user,
+    file,
+    isLiked,
+    likes,
+    caption,
+    commentNumber,
+    comments
+}: Props) => {
     const [toggleLikeMutation, { loading }] = useMutation<
         toggleLike,
         toggleLikeVariables
@@ -166,6 +205,17 @@ const Photo = ({ id, user, file, isLiked, likes }: Props) => {
                     </div>
                 </PhotoActions>
                 <Likes>{likes === 1 ? '1 like' : `${likes} likes`}</Likes>
+                <Comments>
+                    <Comment>
+                        <FatText>{user.userName}</FatText>
+                        <CommentCaption>{caption}</CommentCaption>
+                        <CommentCount>
+                            {commentNumber === 1
+                                ? '1 comment'
+                                : `${commentNumber} commnets`}
+                        </CommentCount>
+                    </Comment>
+                </Comments>
             </PhotoData>
         </PhotoContainer>
     );

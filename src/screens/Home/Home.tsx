@@ -9,6 +9,7 @@ import PageTitle from 'components/PageTitle';
 export const FEED_QUERY = gql`
     query seeFeed($endCursor: Int) {
         seeFeed(endCursor: $endCursor) {
+            # spread BSName
             ...PhotoFragment
             user {
                 userName
@@ -16,6 +17,7 @@ export const FEED_QUERY = gql`
             }
             caption
             comments {
+                # spread BSName
                 ...CommentFragment
             }
             createdAt
