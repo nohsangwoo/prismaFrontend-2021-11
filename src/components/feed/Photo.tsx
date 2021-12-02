@@ -96,29 +96,40 @@ const Photo = ({ id, user, file, isLiked, likes }: Props) => {
         // refetchQueries: [{ query: FEED_QUERY }]
         update: (cache, result) => {
             if (result?.data?.toggleLike?.ok) {
-                console.log('now its time to update the cache plz');
-            }
-
-            // __typename:id 형식으로 구분한다.
-            // __typename의 출처는 __generated__폴더 안에 있다(codegen)
-            const photoId = `Photo:${id}`;
-            cache.writeFragment({
-                id: photoId,
-                // fragment BSName on type
-                // Photo type의 isLike를 변경할꺼다 라는말
-                fragment: gql`
+                // 그냥 중복 제거를 위한 패턴작업
+                const photoId = `Photo:${id}`;
+                const fragment = gql`
                     fragment BSName on Photo {
                         isLiked
                         likes
                     }
-                `,
-                // 변경하고싶은 데이터를 가져와서 덮어씌운다
-                // 이번은 넘겨받은 props의 반전값을 덮어씌운다
-                data: {
-                    isLiked: !isLiked,
-                    likes: isLiked ? likes - 1 : likes + 1
+                `;
+
+                const prevPhoto: any = cache.readFragment({
+                    id: photoId,
+                    // fragment BSName on type
+                    // Photo type의 isLike를 변경할꺼다 라는말
+                    fragment
+                });
+                if ('isLiked' in prevPhoto && 'likes' in prevPhoto) {
+                    const { isLiked: cacheIsLiked, likes: cacheLikes } =
+                        prevPhoto;
+                    cache.writeFragment({
+                        id: photoId,
+                        // fragment BSName on type
+                        // Photo type의 isLike를 변경할꺼다 라는말
+                        fragment,
+                        // 변경하고싶은 데이터를 가져와서 덮어씌운다
+                        // 이번은 넘겨받은 props의 반전값을 덮어씌운다
+                        data: {
+                            isLiked: !cacheIsLiked,
+                            likes: cacheIsLiked
+                                ? cacheLikes - 1
+                                : cacheLikes + 1
+                        }
+                    });
                 }
-            });
+            }
         }
     });
 
