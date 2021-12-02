@@ -12,6 +12,7 @@ import styled from 'styled-components';
 import Avatar from '../Avatar';
 import { FatText } from 'styles/sharedStyle';
 import { FEED_QUERY } from 'screens/Home/Home';
+import { toggleLike, toggleLikeVariables } from '__generated__/toggleLike';
 
 const TOGGLE_LIKE_MUTATION = gql`
     mutation toggleLike($id: Int!) {
@@ -75,7 +76,7 @@ const Likes = styled(FatText)`
 `;
 
 interface Props {
-    id: string;
+    id: number;
     user: {
         avatar: string;
         userName: string;
@@ -85,15 +86,39 @@ interface Props {
     likes: number;
 }
 const Photo = ({ id, user, file, isLiked, likes }: Props) => {
-    const [toggleLikeMutation, { loading }] = useMutation(
-        TOGGLE_LIKE_MUTATION,
-        {
-            variables: {
-                id
-            },
-            refetchQueries: [{ query: FEED_QUERY }]
+    const [toggleLikeMutation, { loading }] = useMutation<
+        toggleLike,
+        toggleLikeVariables
+    >(TOGGLE_LIKE_MUTATION, {
+        variables: {
+            id
+        },
+        // refetchQueries: [{ query: FEED_QUERY }]
+        update: (cache, result) => {
+            if (result?.data?.toggleLike?.ok) {
+                console.log('now its time to update the cache plz');
+            }
+
+            // __typename:id 형식으로 구분한다.
+            // __typename의 출처는 __generated__폴더 안에 있다(codegen)
+            const photoId = `Photo:${id}`;
+            cache.writeFragment({
+                id: photoId,
+                // fragment BSName on type
+                // Photo type의 isLike를 변경할꺼다 라는말
+                fragment: gql`
+                    fragment BSName on Photo {
+                        isLiked
+                    }
+                `,
+                // 변경하고싶은 데이터를 가져와서 덮어씌운다
+                // 이번은 넘겨받은 props의 반전값을 덮어씌운다
+                data: {
+                    isLiked: !isLiked
+                }
+            });
         }
-    );
+    });
 
     const toggleLikeFunc = () => {
         toggleLikeMutation();

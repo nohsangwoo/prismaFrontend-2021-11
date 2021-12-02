@@ -4,6 +4,7 @@ import { logUserOut } from 'apollo/apollo';
 import { COMMENT_FRAGMENT, PHOTO_FRAGMENT } from 'fragments';
 import Photo from 'components/feed/Photo';
 import { seeFeed } from '__generated__/seeFeed';
+import PageTitle from 'components/PageTitle';
 
 export const FEED_QUERY = gql`
     query seeFeed($endCursor: Int) {
@@ -35,6 +36,7 @@ const Home = (): JSX.Element => {
 
     return (
         <div>
+            <PageTitle title="Home" />
             {data?.seeFeed?.map((photo: any) => (
                 <Photo key={photo.id} {...photo} />
             ))}

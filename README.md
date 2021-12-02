@@ -292,6 +292,44 @@ Home.tsx의 seeFeed, Login.tsx의 loginMutation에 시범 적용완료
 -   issue 1
     apollo와 graphql을 둘다 전역설치(-g) 해야지만 실행된다는 말도 있다.(일단 여기선 그런적 없음)
 
-## 쿼리 캐싱(cashe) 방법 2
+## 쿼리 캐싱 작업 순서
 
 -   refetchingQueries로 일단 해결한다음 나중에 직접 캐시덮어씌우기로 해결해준다.
+
+## cache.writeFragment - graphql 캐싱 방법 part2
+
+```
+const [toggleLikeMutation, { loading }] = useMutation<
+    toggleLike,
+    toggleLikeVariables
+>(TOGGLE_LIKE_MUTATION, {
+    variables: {
+        id
+    },
+    // refetchQueries: [{ query: FEED_QUERY }]
+    update: (cache, result) => {
+        if (result?.data?.toggleLike?.ok) {
+            console.log('now its time to update the cache plz');
+        }
+
+        // __typename:id 형식으로 구분한다.
+        // __typename의 출처는 __generated__폴더 안에 있다(codegen)
+        const photoId = `Photo:${id}`;
+        cache.writeFragment({
+            id: photoId,
+            // fragment BSName on type
+            // Photo type의 isLike를 변경할꺼다 라는말
+            fragment: gql`
+                fragment BSName on Photo {
+                    isLiked
+                }
+            `,
+            // 변경하고싶은 데이터를 가져와서 덮어씌운다
+            // 이번은 넘겨받은 props의 반전값을 덮어씌운다
+            data: {
+                isLiked: !isLiked
+            }
+        });
+    }
+});
+```
