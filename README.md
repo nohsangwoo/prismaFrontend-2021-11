@@ -322,12 +322,14 @@ const [toggleLikeMutation, { loading }] = useMutation<
             fragment: gql`
                 fragment BSName on Photo {
                     isLiked
+                    likes
                 }
             `,
             // 변경하고싶은 데이터를 가져와서 덮어씌운다
             // 이번은 넘겨받은 props의 반전값을 덮어씌운다
             data: {
-                isLiked: !isLiked
+                isLiked: !isLiked,
+                likes: isLiked ? likes - 1 : likes + 1
             }
         });
     }
