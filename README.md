@@ -386,3 +386,16 @@ update: (cache, result) => {
 
 -   set basic form on comment part
 -   번들링
+
+## dangerouslySetInnerHTML
+
+-   문자열로 받은 html tag를 그대로 적용 시켜주고 싶을때
+
+## sanitize-html
+
+-   ref: https://www.npmjs.com/package/sanitize-html
+-   받아온 string 문자열에 특정 html만 적용하고 나머지 html태그는 허용하지 않게 해주는 라이브러리
+
+## dangerouslySetInnerHTML + sanitize-html
+
+-   이 두가지를 combine해서 문자열 중 특정 tag만 적용 가능하게 한다.
