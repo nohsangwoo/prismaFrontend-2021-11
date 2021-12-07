@@ -399,3 +399,5 @@ update: (cache, result) => {
 ## dangerouslySetInnerHTML + sanitize-html
 
 -   이 두가지를 combine해서 문자열 중 특정 tag만 적용 가능하게 한다.
+
+## 해시 태그를 클릭시 검색된 태그기준 feed가 보이는 페이지로 넘어가는 기능 구현
