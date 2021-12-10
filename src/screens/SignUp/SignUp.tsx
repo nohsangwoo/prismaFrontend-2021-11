@@ -38,7 +38,7 @@ type FormValues = {
     result?: string;
 };
 
-const schema = yup
+const yupSchema = yup
     .object({
         // 인자로 string형식의 데이터를 추가하면 에러 메시지를 수정할수 있다.
         firstName: yup.string().required(),
@@ -82,7 +82,7 @@ const SignUp = () => {
         setError,
         clearErrors
     } = useForm<FormValues>({
-        resolver: yupResolver(schema),
+        resolver: yupResolver(yupSchema),
         mode: 'onChange'
     });
 
