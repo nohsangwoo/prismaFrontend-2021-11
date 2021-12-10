@@ -401,3 +401,7 @@ update: (cache, result) => {
 -   이 두가지를 combine해서 문자열 중 특정 tag만 적용 가능하게 한다.
 
 ## 해시 태그를 클릭시 검색된 태그기준 feed가 보이는 페이지로 넘어가는 기능 구현
+
+-   이기능을 적용하려면 sanitize-html를 이용하는 경우 보안이 취약해져서 sanitize-html적용 해제한다.
+
+## apollo cache update way : modify

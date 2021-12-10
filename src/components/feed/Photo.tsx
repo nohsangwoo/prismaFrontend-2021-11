@@ -14,6 +14,7 @@ import { FatText } from 'styles/sharedStyle';
 // import { FEED_QUERY } from 'screens/Home/Home';
 import { toggleLike, toggleLikeVariables } from '__generated__/toggleLike';
 import Comments from './Comments';
+import { chain } from 'lodash';
 
 const TOGGLE_LIKE_MUTATION = gql`
     mutation toggleLike($id: Int!) {
@@ -122,37 +123,22 @@ const Photo = ({
             if (result?.data?.toggleLike?.ok) {
                 // 그냥 중복 제거를 위한 패턴작업
                 const photoId = `Photo:${id}`;
-                const fragment = gql`
-                    fragment BSName on Photo {
-                        isLiked
-                        likes
-                    }
-                `;
-
-                const prevPhoto: any = cache.readFragment({
+                cache.modify({
                     id: photoId,
-                    // fragment BSName on type
-                    // Photo type의 isLike를 변경할꺼다 라는말
-                    fragment
-                });
-                if ('isLiked' in prevPhoto && 'likes' in prevPhoto) {
-                    const { isLiked: cacheIsLiked, likes: cacheLikes } =
-                        prevPhoto;
-                    cache.writeFragment({
-                        id: photoId,
-                        // fragment BSName on type
-                        // Photo type의 isLike를 변경할꺼다 라는말
-                        fragment,
-                        // 변경하고싶은 데이터를 가져와서 덮어씌운다
-                        // 이번은 넘겨받은 props의 반전값을 덮어씌운다
-                        data: {
-                            isLiked: !cacheIsLiked,
-                            likes: cacheIsLiked
-                                ? cacheLikes - 1
-                                : cacheLikes + 1
+                    fields: {
+                        isLiked(prev: boolean) {
+                            return !prev;
+                        },
+                        likes(prev: number) {
+                            // props로 전달받은 현재 like상태가 true라면 likes에서 -1 해준다
+                            if (isLiked) {
+                                return prev - 1;
+                            }
+                            // props로 전달받은 현재 like상태가 false라면 +1 해준다
+                            return prev + 1;
                         }
-                    });
-                }
+                    }
+                });
             }
         }
     });
