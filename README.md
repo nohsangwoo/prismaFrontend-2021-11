@@ -434,3 +434,11 @@ photo:{
 ```
 
 ## createComment on Comments.tsx
+
+## delete comment on Comment.tsx
+
+사용법)
+
+```
+cache.evict({ id: `Comment:${id}` });
+```
