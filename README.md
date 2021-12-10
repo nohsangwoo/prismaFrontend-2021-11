@@ -407,5 +407,30 @@ update: (cache, result) => {
 ## apollo cache update way : modify
 
 -   apollo 3에서 새롭게 추가된 cache 업데이트 방법중 modify를 사용하여 업데이트 한다.
+-   update할때 cache.writeFragment를 사용하여 업데이트 해줘야 원래 cache에 저장되는 form으로 제대로 저장된다.
+-   cache되는 필드중 배열로 반환되는 큰 또다른 Part가 있다면 \_ref로 연결해주는 것으로 추정된다.
+    ex)
+
+```
+comment1:{
+    id
+    payload
+    ...
+}
+...
+photo:{
+    id
+    isMine
+    // 배열로 반환되는 큰 cache파트
+    comments: [
+        _ref:Comment1,
+        _ref:Comment2,
+        ...
+    ]
+    ...
+    ...
+}
+이런 형식인듯
+```
 
 ## createComment on Comments.tsx
