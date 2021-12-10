@@ -405,3 +405,5 @@ update: (cache, result) => {
 -   이기능을 적용하려면 sanitize-html를 이용하는 경우 보안이 취약해져서 sanitize-html적용 해제한다.
 
 ## apollo cache update way : modify
+
+## createComment on Comments.tsx
