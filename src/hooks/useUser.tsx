@@ -3,6 +3,7 @@ import { gql, useQuery } from '@apollo/client';
 import { useSelector } from 'react-redux';
 import { RootState } from 'store/store';
 import { logUserOut } from 'apollo/apollo';
+import { me } from '__generated__/me';
 
 const ME_QUERY = gql`
     query me {
@@ -16,7 +17,7 @@ const ME_QUERY = gql`
 
 const useUser = () => {
     const hasToken = useSelector((state: RootState) => state.users.isLoggedIn);
-    const { data } = useQuery(ME_QUERY, {
+    const { data } = useQuery<me>(ME_QUERY, {
         skip: !hasToken
     });
     useEffect(() => {

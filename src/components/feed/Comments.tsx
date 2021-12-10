@@ -1,16 +1,16 @@
 import React from 'react';
-import { useForm, SubmitHandler } from 'react-hook-form';
-import styled from 'styled-components';
 import Comment from './Comment';
+import registerList from './registerList';
+import useUser from 'hooks/useUser';
+import styled from 'styled-components';
+import { useForm, SubmitHandler } from 'react-hook-form';
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { gql, useMutation } from '@apollo/client';
 import {
     createComment,
     createCommentVariables
 } from '__generated__/createComment';
-import registerList from './registerList';
-import Input from 'components/auth/Input';
-import * as yup from 'yup';
-import { yupResolver } from '@hookform/resolvers/yup';
 
 type FormValues = {
     payload: string;
@@ -32,6 +32,7 @@ const CREATE_COMMENT_MUTATION = gql`
         createComment(photoId: $photoId, payload: $payload) {
             ok
             error
+            id
         }
     }
 `;
@@ -45,6 +46,20 @@ const CommentCount = styled.span`
     display: block;
     font-weight: 600;
     font-size: 10px;
+`;
+
+const PostCommentContainer = styled.div`
+    margin-top: 10px;
+    padding-top: 15px;
+    padding-bottom: 10px;
+    border-top: 1px solid ${props => props.theme.borderColor};
+`;
+
+const PostCommentInput = styled.input`
+    width: 100%;
+    &::placeholder {
+        font-size: 12px;
+    }
 `;
 
 interface Props {
@@ -70,17 +85,52 @@ const Comments = ({
     commentNumber,
     comments
 }: Props) => {
+    const { data: userData } = useUser();
+
+    const { register, handleSubmit, setValue, getValues } = useForm<FormValues>(
+        {
+            resolver: yupResolver(yupSchema),
+            mode: 'onChange',
+            defaultValues: {
+                payload: ''
+                // userName: location?.state?.userName || '',
+            }
+        }
+    );
+
     const [createCommentMutation, { loading }] = useMutation<
         createComment,
         createCommentVariables
-    >(CREATE_COMMENT_MUTATION);
+    >(CREATE_COMMENT_MUTATION, {
+        // mutation이 끝난이후 cache 업데이트를 위한 작업
+        update: (cache, result) => {
+            const { payload } = getValues();
+            setValue('payload', '');
+            const { data } = result;
+            if (data?.createComment.ok && userData?.me) {
+                const newComment = {
+                    __typename: 'Comment',
+                    createdAt: Date.now() + '',
+                    id: data.createComment.id,
+                    isMine: true,
+                    payload,
+                    user: {
+                        ...userData.me
+                    }
+                };
 
-    const { register, handleSubmit, setValue } = useForm<FormValues>({
-        resolver: yupResolver(yupSchema),
-        mode: 'onChange',
-        defaultValues: {
-            payload: ''
-            // userName: location?.state?.userName || '',
+                cache.modify({
+                    id: `Photo:${photoId}`,
+                    fields: {
+                        comments(prev) {
+                            return [...prev, newComment];
+                        },
+                        commentNumber(prev) {
+                            return prev + 1;
+                        }
+                    }
+                });
+            }
         }
     });
 
@@ -88,21 +138,18 @@ const Comments = ({
         if (loading) {
             return;
         }
-
         createCommentMutation({
             variables: {
                 photoId,
                 payload: data.payload
             }
         });
-
-        setValue('payload', '');
     };
 
     const InputParts = registerList.map((data, index) => {
         return (
             <div key={index}>
-                <Input
+                <PostCommentInput
                     {...register(`${data.registerKey}`)}
                     type={data.type}
                     placeholder={data.placeholder}
@@ -126,9 +173,9 @@ const Comments = ({
                     payload={comment.payload}
                 />
             ))}
-            <div>
+            <PostCommentContainer>
                 <form onSubmit={handleSubmit(onSubmitValid)}>{InputParts}</form>
-            </div>
+            </PostCommentContainer>
         </CommentsContainer>
     );
 };

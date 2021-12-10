@@ -406,4 +406,6 @@ update: (cache, result) => {
 
 ## apollo cache update way : modify
 
+-   apollo 3에서 새롭게 추가된 cache 업데이트 방법중 modify를 사용하여 업데이트 한다.
+
 ## createComment on Comments.tsx

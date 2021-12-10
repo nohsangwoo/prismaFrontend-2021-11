@@ -14,14 +14,14 @@ const Img = styled.img`
 `;
 
 interface Props {
-    url: string;
+    url: string | null | undefined;
     lg?: boolean;
 }
 
 const Avatar = ({ url = '', lg = false }: Props): JSX.Element => {
     return (
         <SAvatar lg={lg}>
-            {url !== '' ? <Img src={url} alt="avatar" /> : null}
+            {url !== '' ? url && <Img src={url} alt="avatar" /> : null}
         </SAvatar>
     );
 };

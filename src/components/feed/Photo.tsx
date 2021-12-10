@@ -14,7 +14,6 @@ import { FatText } from 'styles/sharedStyle';
 // import { FEED_QUERY } from 'screens/Home/Home';
 import { toggleLike, toggleLikeVariables } from '__generated__/toggleLike';
 import Comments from './Comments';
-import { chain } from 'lodash';
 
 const TOGGLE_LIKE_MUTATION = gql`
     mutation toggleLike($id: Int!) {
