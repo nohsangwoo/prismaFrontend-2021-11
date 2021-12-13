@@ -8,6 +8,7 @@ import NotFound from 'screens/NotFound';
 import { useSelector } from 'react-redux';
 import { RootState } from 'store/store';
 import Layout from 'components/Layout';
+import Profile from 'screens/Profile';
 
 const Index = () => {
     const isLoggedIn = useSelector(
@@ -34,6 +35,8 @@ const Index = () => {
                     {!isLoggedIn ? (
                         <Route path={routes.signUp} element={<SignUp />} />
                     ) : null}
+
+                    <Route path={`/users/:userName`} element={<Profile />} />
 
                     <Route path="*" element={<NotFound />} />
                 </Routes>

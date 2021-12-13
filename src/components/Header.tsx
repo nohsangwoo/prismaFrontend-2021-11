@@ -74,7 +74,16 @@ function Header() {
                                     />
                                 </Icon>
                                 <Icon>
-                                    <Avatar url={data?.me?.avatar} lg={true} />
+                                    <Link
+                                        to={
+                                            `/users/${data?.me?.userName}` || ''
+                                        }
+                                    >
+                                        <Avatar
+                                            url={data?.me?.avatar}
+                                            lg={true}
+                                        />
+                                    </Link>
                                 </Icon>
                             </IconsContainer>
                         </>
