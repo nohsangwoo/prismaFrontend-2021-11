@@ -60,6 +60,10 @@ const cache = new InMemoryCache({
                     keyArgs: false
                 }
             }
+        },
+        User: {
+            // 정확히 어떤 필드를 고유식별자로 설정할건지 설정함
+            keyFields: obj => `User:${obj.username}`
         }
     }
 });
