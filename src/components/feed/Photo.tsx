@@ -14,6 +14,7 @@ import { FatText } from 'styles/sharedStyle';
 // import { FEED_QUERY } from 'screens/Home/Home';
 import { toggleLike, toggleLikeVariables } from '__generated__/toggleLike';
 import Comments from './Comments';
+import { Link } from 'react-router-dom';
 
 const TOGGLE_LIKE_MUTATION = gql`
     mutation toggleLike($id: Int!) {
@@ -147,10 +148,12 @@ const Photo = ({
     };
     return (
         <PhotoContainer key={id}>
-            <PhotoHeader>
-                <Avatar lg url={user.avatar} />
-                <Username>{user.userName}</Username>
-            </PhotoHeader>
+            <Link to={`/users/${user.userName}` || ''}>
+                <PhotoHeader>
+                    <Avatar lg url={user.avatar} />
+                    <Username>{user.userName}</Username>
+                </PhotoHeader>
+            </Link>
             <PhotoFile src={file} />
             <PhotoData>
                 <PhotoActions>

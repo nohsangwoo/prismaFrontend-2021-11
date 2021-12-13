@@ -35,6 +35,7 @@ const Profile = () => {
             }
         }
     );
+    console.log(data);
     return <div>'Profile'</div>;
 };
 

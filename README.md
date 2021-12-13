@@ -448,3 +448,5 @@ cache.evict({ id: `Comment:${id}` });
 -   set basic profile form
 
 ## seeProfile query on Profile components
+
+-   apply seeProfile query on Profile Components

@@ -53,7 +53,7 @@ function Header() {
     );
     const { data } = useUser();
 
-    console.log(data);
+    // console.log(data);
     return (
         <SHeader>
             <Wrapper>
