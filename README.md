@@ -450,3 +450,8 @@ cache.evict({ id: `Comment:${id}` });
 ## seeProfile query on Profile components
 
 -   apply seeProfile query on Profile Components
+
+## apollo cache - keyfield
+
+-   apollo는 기본적으로 id를 식별자로 잡아서 캐싱해준다.
+-   but 가끔 id가 아닌 다른것을 식별자로 삼아서 캐싱이 필요할때 사용할 수 있다.

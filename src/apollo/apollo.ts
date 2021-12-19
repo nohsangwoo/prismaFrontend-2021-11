@@ -63,6 +63,8 @@ const cache = new InMemoryCache({
         },
         User: {
             // 정확히 어떤 필드를 고유식별자로 설정할건지 설정함
+            // 즉 원래 기본적으로 id를 기준으로 고유 식별자로 구분했지만 이를 커스텀해서 변경시킬수 있다.
+            // 이경우 User라는 쿼리는 username이라는 식별자를 기준으로 캐싱해준다
             keyFields: obj => `User:${obj.username}`
         }
     }

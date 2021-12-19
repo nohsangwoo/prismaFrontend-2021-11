@@ -26,7 +26,6 @@ const SEE_PROFILE_QUERY = gql`
 
 const Profile = () => {
     const { userName } = useParams();
-
     const { data } = useQuery<seeProfile, seeProfileVariables>(
         SEE_PROFILE_QUERY,
         {
